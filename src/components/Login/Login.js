@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import googleicon from "../../assets/images/login/g-icon.png";
 import loginimage from "../../assets/images/login/loginbottom.png";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [status, setStatus] = useState("login");
   const [number, setNumber] = useState("");
+  const [result, setResult] = useState();
+  const [error, setError] = useState("");
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return false;
     setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
@@ -13,14 +18,57 @@ const Login = () => {
       element.nextSibling.focus();
     }
   };
-  const handleKeyPress = (e) => {
+  const handleVerifyKeyPress = (e) => {
     if (e.key === "Enter") {
       console.log("Enter");
     }
   };
-  const handleVerifyKeyPress = (e) => {
+
+  const navigate = useNavigate();
+
+  const { currentUser } = useAuth();
+  const { signInWithGoogle } = useAuth();
+  const { signInWithPhone } = useAuth();
+  const { signInWithOtp } = useAuth();
+  const { logout } = useAuth();
+  useEffect(() => {
+    if (currentUser && currentUser.uid) {
+      navigate("/dashboard");
+    }
+  }, [currentUser]);
+
+  const googleLogin = async () => {
+    try {
+      setError("");
+      await signInWithGoogle();
+      setStatus("loggedIn");
+    } catch {
+      setError("Failed to create an account");
+    }
+  };
+  const getOtp = async () => {
+    console.log(number);
+    if (number === "" || number === undefined) return setStatus("login");
+    try {
+      let newNumber = "+91" + number;
+      const response = await signInWithPhone(newNumber);
+      console.log("OTP SENT");
+      setStatus("otp");
+      setResult(response);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const verifyOtp = async () => {
+    let otp1 = "";
+    otp.map((o) => (otp1 += o));
+    if (otp1 === "" || otp1 === null) return;
+    signInWithOtp(result, otp1);
+  };
+  const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      console.log("Enter");
+      getOtp();
+      console.log("enter");
     }
   };
   return (
@@ -43,14 +91,19 @@ const Login = () => {
                       className="number_input"
                       placeholder="Enter Phone Number"
                       onChange={(e) => setNumber(e.target.value)}
+                      value={
+                        number !== "" && number !== undefined ? number : null
+                      }
                       onKeyDown={handleKeyPress}
                     />
                     <div id="recaptcha-container" />
                     <div className="login_btn">
                       <button
+                        disabled={
+                          !number || number === "" || number.length != 10
+                        }
                         onClick={() => {
-                          setStatus("otp");
-                          console.log("otp");
+                          getOtp();
                         }}
                       >
                         Login
@@ -59,7 +112,12 @@ const Login = () => {
                     <div className="divider">
                       <h1>or</h1>
                     </div>
-                    <button className="google_btn">
+                    <button
+                      className="google_btn"
+                      onClick={() => {
+                        googleLogin();
+                      }}
+                    >
                       <img src={googleicon} alt="googleicon" />
                       Sign up with google
                     </button>
@@ -82,7 +140,16 @@ const Login = () => {
                   <div>
                     <div className="w-75 d-flex justify-content-between mb-0">
                       <p className="num">+91-{number}</p>
-                      <p className="change_num">edit number</p>
+                      <p
+                        className="change_num"
+                        onClick={async () => {
+                          await setStatus("login");
+                          setOtp(new Array(6).fill(""));
+                          document.getElementById("number").focus();
+                        }}
+                      >
+                        Edit number
+                      </p>
                     </div>
                     <div className="w-75 otp_box d-flex justify-content-center ms-3">
                       {otp.map((data, index) => {
@@ -103,7 +170,11 @@ const Login = () => {
                       })}
                     </div>
                     <div className="login_btn">
-                      <button onClick={() => setStatus("loggedIn")}>
+                      <button
+                        onClick={() => {
+                          verifyOtp();
+                        }}
+                      >
                         Verify OTP
                       </button>
                     </div>
