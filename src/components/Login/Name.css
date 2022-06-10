@@ -1,0 +1,15 @@
+.details {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+.name_banner {
+  height: 500px;
+  width: 500px;
+  position: relative;
+}
+.name_banner .name_image {
+  max-width: 100%;
+  position: absolute;
+  top: 0;
+}
