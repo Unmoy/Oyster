@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { UserAuthProvider } from "../context/UserContext";
 
 function SimpleEditor() {
   const [text, setText] = useState("thes is a text with som errorrs");
@@ -43,42 +44,46 @@ function SimpleEditor() {
     console.log(text);
   }, [text]);
   return (
-    <div className="text-center p-3">
-      <textarea
-        id="textarea"
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-        }}
-        rows="10"
-        cols="100"
-      />
-      <br />
-      <button onClick={check}>Check</button>
-      {matches && matches.length > 0 && (
-        <>
-          {matches.map((match, index) => (
-            <div key={index} className="border border-dark p-1 m-1">
-              <span className="text-danger">
-                <s>{text.substr(match.context.offset, match.context.length)}</s>
-              </span>
-              <span className="text-success">
-                {match.replacements[0].value}
-              </span>
-              <br />
-              <span className="text-warning">{match.message}</span>
-              <button
-                onClick={() => {
-                  correctText(match, index);
-                }}
-              >
-                Correct
-              </button>
-            </div>
-          ))}
-        </>
-      )}
-    </div>
+    <UserAuthProvider>
+      <div className="text-center p-3">
+        <textarea
+          id="textarea"
+          value={text}
+          onChange={(e) => {
+            setText(e.target.value);
+          }}
+          rows="10"
+          cols="100"
+        />
+        <br />
+        <button onClick={check}>Check</button>
+        {matches && matches.length > 0 && (
+          <>
+            {matches.map((match, index) => (
+              <div key={index} className="border border-dark p-1 m-1">
+                <span className="text-danger">
+                  <s>
+                    {text.substr(match.context.offset, match.context.length)}
+                  </s>
+                </span>
+                <span className="text-success">
+                  {match.replacements[0].value}
+                </span>
+                <br />
+                <span className="text-warning">{match.message}</span>
+                <button
+                  onClick={() => {
+                    correctText(match, index);
+                  }}
+                >
+                  Correct
+                </button>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </UserAuthProvider>
   );
 }
 

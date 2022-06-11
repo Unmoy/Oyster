@@ -59,10 +59,17 @@ export const AuthProvider = ({ children }) => {
             console.log(data);
             if (data.message === "LOGIN_SUCCESSFUL") {
               localStorage.setItem("id", data.id);
-              setCurrentUser({ ...currentUser, id: data.id });
               if (data.user) {
+                const { uid, name, email, phone } = data.user;
+                const { id } = data;
+                setCurrentUser({ uid, name, email, phone, id });
                 navigate("/dashboard");
               } else {
+                const uid = user.uid;
+                const name = user.displayName;
+                const email = user.email;
+                const { id } = data;
+                setCurrentUser({ uid, name, email, id });
                 navigate("/addDetails");
               }
             } else {
@@ -114,8 +121,15 @@ export const AuthProvider = ({ children }) => {
               setCurrentUser({ ...currentUser, id: data.id });
               localStorage.setItem("id", data.id);
               if (data.user) {
+                const { uid, name, email, phone } = data.user;
+                const { id } = data;
+                setCurrentUser({ uid, name, email, phone, id });
                 navigate("/dashboard");
               } else {
+                const uid = user.uid;
+                const phone = user.phoneNumber;
+                const { id } = data;
+                setCurrentUser({ uid, phone, id });
                 navigate("/addDetails");
               }
             } else {
@@ -130,6 +144,13 @@ export const AuthProvider = ({ children }) => {
 
   function logout() {
     auth.signOut();
+    setCurrentUser({
+      uid: "",
+      name: "",
+      phone: "",
+      email: "",
+      id: "",
+    });
 
     return;
   }
