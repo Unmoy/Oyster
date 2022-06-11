@@ -1,0 +1,57 @@
+.editor {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.editor:before {
+  position: absolute;
+  content: "";
+  top: 0px;
+  height: 100%;
+  width: 3.5em;
+}
+.editor:before {
+  left: 0px;
+  background: #c4c7fb;
+}
+.editor_container {
+  width: 75vw;
+  height: 100%;
+  margin: auto;
+}
+.document_title {
+  border: none;
+  position: absolute;
+  top: 5%;
+  left: 10%;
+}
+.document_title:focus {
+  outline: none;
+}
+
+.tox-tinymce {
+  margin: auto;
+  max-width: 800px;
+}
+.tox .tox-editor-container {
+  /* flex-direction: row; */
+  /* display: flex; */
+  /* flex: 1 1 auto; */
+  /* flex-direction: column; */
+  /* overflow: hidden; */
+}
+.tox .tox-toolbar,
+.tox .tox-toolbar__overflow,
+.tox .tox-toolbar__primary {
+  /* flex-direction: column; */
+  /* justify-content: flex-start; */
+  /* align-items: flex-start; */
+}
+.tox .tox-toolbar__group {
+  /* flex-direction: column; */
+}
+.tox .tox-statusbar {
+  display: none !important;
+}
