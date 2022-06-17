@@ -28,17 +28,19 @@ const AccordianMenu = ({ matches, correctText, text, check }) => {
             <div className="accordian_card_container">
               {matches.map((match, index) => (
                 <>
-                  <div key={index} className="accordian_card" onClick={() => {
-                        correctText(match, index);
-                        console.log(match)
-                      }}>
+                  <div
+                    key={index}
+                    className="accordian_card"
+                    onClick={() => {
+                      correctText(match, index);
+                      console.log(match);
+                    }}
+                  >
                     <h6>
                       {text.substr(match.context.offset, match.context.length)}
                     </h6>
                     <h2>{match.replacements[0].value}</h2>
-                    <button
-                      
-                    >
+                    <button>
                       <img src={image} alt="" />
                     </button>
                   </div>

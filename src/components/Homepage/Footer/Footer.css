@@ -1,0 +1,29 @@
+.footer_container {
+  background: #b4d2ff;
+  height: 60vh;
+  padding: 0 100px;
+}
+.footer_container h1 {
+  font-weight: 700;
+  font-size: 44px;
+  max-width: 600px;
+  color: rgba(0, 0, 0, 0.58);
+}
+.footer_container span {
+  color: #fff;
+}
+.footer_container button {
+  background: #c4c7fb;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  padding: 10px 60px;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #fff;
+  margin-top: 30px;
+}
+.footer_border {
+  border-bottom: 1px solid #fff;
+  padding-bottom: 60px;
+}

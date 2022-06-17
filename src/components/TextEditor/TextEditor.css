@@ -24,8 +24,8 @@
 .document_title {
   border: none;
   position: absolute;
-  top: 5%;
-  left: 10%;
+  top: 7%;
+  left: 12%;
 }
 .document_title:focus {
   outline: none;
@@ -55,3 +55,6 @@
 .tox .tox-statusbar {
   display: none !important;
 }
+/* span {
+  color: red !important;
+} */

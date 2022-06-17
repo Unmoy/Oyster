@@ -115,6 +115,9 @@ h1,
   color: #000000;
   margin-bottom: 0;
 }
+.accordian_card button {
+  border: none;
+}
 .accordian_card img {
   width: 1.5em;
 }

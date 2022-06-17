@@ -7,10 +7,10 @@ const TextEditor = () => {
     "Write your text here to checkk thr gramar correctom"
   );
   const [matches, setMatches] = useState([]);
+  console.log(matches);
   const correctText = (match, index) => {
-    // console.log("correct")
     const newText = text.replace(
-      text.substr(match.context.offset, match.context.length),
+      text.substring(match.context.offset, match.context.length),
       match.replacements[0].value
     );
     setText(newText);
@@ -45,7 +45,31 @@ const TextEditor = () => {
   };
   useEffect(() => {
     console.log(text);
-  }, [text]);
+
+    // function wrapText(elem, start, length) {
+    //   console.log(elem);
+    //   var before = text.substring(0, start);
+    //   var after = text.substring(start + length, text.length);
+    //   var letters = text.substring(start, start + length);
+    //   elem.innerHTML = "";
+    //   var text1 = document.createTextNode(before);
+    //   var text2 = document.createElement("span");
+    //   text2.style.color = "red";
+    //   text2.innerHTML = letters;
+    //   var text3 = document.createTextNode(after);
+    //   elem.appendChild(text1);
+    //   elem.appendChild(text2);
+    //   elem.appendChild(text3);
+    //   console.log(text3);
+    // }
+
+    var elem = document.getElementById("grammertext");
+    // wrapText(elem, text.length - 6, 6);
+
+    matches.map((match) => {
+      // wrapText(elem, match.context.offset, match.context.length);
+    });
+  }, [text, matches]);
 
   return (
     <div className="editor">
@@ -59,6 +83,7 @@ const TextEditor = () => {
         </div>
         <div className="editor_container">
           <Editor
+            id="grammertext"
             apiKey="qh47kjs2yf3ekhprumfxo739eefze0v3t0d7op6hffim2s77"
             onEditorChange={(newValue, editor) => {
               setText(editor.getContent({ format: "text" }));
@@ -69,8 +94,7 @@ const TextEditor = () => {
               menubar: false,
               plugins: "lists link",
               toolbar: " bold italic underline bullist numlist link h1 h2",
-              content_style:
-                "body{ font-family:Inter,sans-serif; font-size:16px }",
+              content_style: "body{font-size:16px}",
             }}
           />
         </div>

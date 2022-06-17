@@ -1,0 +1,138 @@
+.NavbarItems {
+  /* height: 100px; */
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  /* padding-top: 20px; */
+}
+.logoWrappper {
+}
+.logo {
+  cursor: pointer;
+  border: 1px solid;
+  padding-right: 6px;
+}
+
+.logo img {
+  width: 8em;
+  background-color: #c4c7fb;
+  padding-left: 10px;
+}
+
+.menu_icon {
+  display: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.menu_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nav_menu {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  background-color: #c4c7fb;
+  padding: 10px 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  margin-left: 8px;
+}
+.menulistwrapper {
+  border: 1px solid;
+}
+.nav_link {
+  color: #000;
+  text-decoration: none;
+  padding: 0.5rem 2rem;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.nav_link:hover {
+  color: #000;
+}
+.signin_link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+.signin_link:hover {
+  color: #fff;
+}
+.auth_btn button {
+  border-radius: 4px;
+  padding: 10px 20px 12px 20px;
+  background: #1472e5;
+  border: none;
+  cursor: pointer;
+}
+.auth_btn .signout_link {
+  border-radius: 4px;
+  padding: 10px 20px 12px 20px;
+  background: #fff;
+  border: 1px solid;
+  cursor: pointer;
+  color: #1472e5;
+  font-size: 16px;
+  font-weight: 700;
+}
+@media screen and (max-width: 960px) {
+  .logo {
+    cursor: pointer;
+    width: 180px;
+    height: 180px;
+    margin-bottom: 10px;
+  }
+  .NavbarItems {
+    position: relative;
+  }
+  .menu_box {
+    display: block;
+  }
+  .nav_menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: absolute;
+    top: 80px;
+    left: -100%;
+    opacity: 1;
+    transition: all 0.5s ease;
+    margin-top: 0;
+  }
+  .nav_menu.active {
+    list-style-type: none;
+    background-color: #f3faff;
+    left: 0;
+    opacity: 1;
+    transition: all 0.5s ease;
+    z-index: 99;
+    /* align-items: center; */
+  }
+  .nav_link {
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    display: table;
+  }
+  .nav-link:hover {
+    color: #000;
+  }
+  .menu_icon {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 64%);
+    font-size: 1.8rem;
+  }
+  .auth_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+}
