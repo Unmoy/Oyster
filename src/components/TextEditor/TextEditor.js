@@ -71,7 +71,15 @@ const TextEditor = () => {
   //     // wrapText(elem, match.context.offset, match.context.length);
   //   });
   // }, []);
-
+  const handlekeypress = (e) => {
+    console.log(e);
+    if (e.keyCode == 32) {
+      console.log("Space");
+    }
+    if (e.keyCode == 46) {
+      console.log("stopo");
+    }
+  };
   return (
     <div className="editor">
       <img src={logo} alt="" className="brandlogo" />
@@ -89,7 +97,9 @@ const TextEditor = () => {
             onEditorChange={(newValue, editor) => {
               setText(editor.getContent({ format: "text" }));
             }}
-            initialValue={text}
+            // value={text}
+            initialValue="<p>Hello I am from initial value</p>"
+            onKeyPress={handlekeypress}
             init={{
               height: 500,
               menubar: false,
