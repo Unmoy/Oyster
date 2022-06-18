@@ -1,0 +1,105 @@
+.sidemenu {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 16vw;
+  height: 100vh;
+  background: #cdcffc;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.sidemenu_brand {
+  /* height: 25vh; */
+  margin-bottom: 30px;
+}
+
+.brand--logo {
+  margin: 0 auto;
+  display: block;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 40%;
+}
+.sidemenu_profile {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.sidemenu_profile h5 {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  letter-spacing: -0.015em;
+  color: #000000;
+}
+.sidemenu_profile p {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 25px;
+  letter-spacing: -0.015em;
+  color: #7d7a7a;
+}
+.sidemenu_profile img {
+  margin: 20px auto;
+  display: block;
+  width: 40%;
+}
+.sidebar_menu_item {
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #000;
+}
+
+.menu--icon {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.menu--text {
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 27px;
+}
+.menu--text_3 {
+  font-size: 15px;
+}
+.sidebar_menu_item:hover {
+  color: #aaafff;
+  background: #e6ebff;
+}
+
+.sidebar_menu_item:hover svg path {
+  fill: #aaafff;
+}
+
+.checked {
+  color: #aaafff;
+  background: #e6ebff;
+}
+
+.checked svg path {
+  fill: #aaafff;
+}
+
+path {
+  fill: #b7b7b7;
+}
+
+.sidemenu_btn {
+  position: absolute;
+  bottom: 2em;
+  left: 15%;
+  cursor: pointer;
+  color: #ff1d25;
+}
+
+.logout_icon path {
+  fill: #ff1d25;
+}
+.logout_icon {
+  margin-right: 10px;
+}

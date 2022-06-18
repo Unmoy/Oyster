@@ -1,25 +1,18 @@
-import { useNavigate } from "react-router-dom";
-import { UserAuthProvider } from "../context/UserContext";
-
-function Dashboard() {
-  const navigate = useNavigate();
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar/Sidebar";
+import "./Dashboard.css";
+import DashboardNav from "./DashboardNav";
+const Dashboard = () => {
   return (
-    <>
-      <UserAuthProvider>
-        <p>Dashboard</p>
-        <p>
-          <a href="/grammarly-editor">Grammarly Editor</a>
-          <br />
-          <a href="/simple-editor">Simple Editor</a>
-          <br />
-          <a href="/texteditor">Text Editor</a>
-        </p>
-        <p>
-          <a href="/logout">Logout</a>
-        </p>
-      </UserAuthProvider>
-    </>
+    <div className="dashboard">
+      <Sidebar />
+      <div className="dashboard_outlet">
+        <DashboardNav />
+        <Outlet />
+      </div>
+    </div>
   );
-}
+};
 
 export default Dashboard;

@@ -47,7 +47,7 @@
   transition: all 0.25s ease-in;
 }
 
-h1,
+.accordian_title,
 .accordian_ul li {
   animation: flipdown 0.5s ease both;
 }

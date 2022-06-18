@@ -9,7 +9,7 @@ export const MenuList = [
   },
   {
     title: "Contact us",
-    url: "/",
+    url: "/dashboard",
   },
   {
     title: "Login",

@@ -1,0 +1,43 @@
+.story_card {
+  background: #efefef;
+  border-radius: 5px;
+  width: 161px;
+  height: 200px;
+  padding: 10px;
+  margin: 20px;
+}
+.story_card_text {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 13px;
+  text-align: justify;
+  letter-spacing: 0.02em;
+  color: #767791;
+  height: 80%;
+}
+.story_card_text h1 {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 25px;
+  letter-spacing: -0.015em;
+  color: #000000;
+  margin-bottom: 10px;
+}
+.story_card_footer {
+  display: flex;
+  justify-content: space-between;
+}
+.story_card_footer h4 {
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 25px;
+  letter-spacing: -0.015em;
+  color: #767790;
+}
+.story_card_footer h5 {
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 25px;
+  letter-spacing: -0.015em;
+  color: #a9adc9;
+}
