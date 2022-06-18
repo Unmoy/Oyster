@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
           uid: user.uid,
           id: "",
         });
-        fetch("https://oysterbackend.herokuapp.com/auth/", {
+        fetch("https://oysterbackend.herokuapp.com/user/login", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -57,13 +57,15 @@ export const AuthProvider = ({ children }) => {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            if (data.message === "LOGIN_SUCCESSFUL") {
+            if (data.message === "LOGIN_SUCCESSFULL") {
               localStorage.setItem("id", data.id);
+              localStorage.setItem("token", data.token);
               if (data.user) {
                 const { uid, name, email, phone } = data.user;
                 const { id } = data;
                 setCurrentUser({ uid, name, email, phone, id });
-                navigate("/dashboard");
+                console.log(result);
+                // navigate("/dashboard");
               } else {
                 const uid = user.uid;
                 const name = user.displayName;
@@ -104,7 +106,7 @@ export const AuthProvider = ({ children }) => {
           uid: user.uid,
           id: "",
         });
-        fetch("https://oysterbackend.herokuapp.com/auth/", {
+        fetch("https://oysterbackend.herokuapp.com/user/login", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -117,9 +119,10 @@ export const AuthProvider = ({ children }) => {
         })
           .then((response) => response.json())
           .then((data) => {
-            if (data.message === "LOGIN_SUCCESSFUL") {
+            if (data.message === "LOGIN_SUCCESSFULL") {
               setCurrentUser({ ...currentUser, id: data.id });
               localStorage.setItem("id", data.id);
+              localStorage.setItem("token", data.token);
               if (data.user) {
                 const { uid, name, email, phone } = data.user;
                 const { id } = data;

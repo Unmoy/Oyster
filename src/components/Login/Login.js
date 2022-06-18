@@ -31,11 +31,29 @@ const Login = () => {
   const { signInWithPhone } = useAuth();
   const { signInWithOtp } = useAuth();
   const { logout } = useAuth();
+  const token = localStorage.getItem("token");
+  const check = () => {
+    fetch("https://oysterbackend.herokuapp.com/user/login", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result===true) {
+          navigate("/dashboard");
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        navigate("/login");
+      });
+  };
   useEffect(() => {
+    check();
     if (currentUser && currentUser.uid) {
-      navigate("/dashboard");
+      // navigate("/dashboard");
     }
-  }, [currentUser]);
+  }, [currentUser, token]);
 
   const googleLogin = async () => {
     try {

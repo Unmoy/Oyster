@@ -3,7 +3,14 @@ import "./AccordianMenu.css";
 import image from "../../assets/images/circle.png";
 import downArrow from "../../assets/images/chevron-down.png";
 import upArrow from "../../assets/images/chevron-up.png";
-const AccordianMenu = ({ matches, correctText, text, check }) => {
+const AccordianMenu = ({
+  matches,
+  correctText,
+  text,
+  check,
+  handlesubmit,
+  title,
+}) => {
   const [open, setOpen] = useState(true);
   const [grammaropen, setGrammarOpen] = useState(true);
   return (
@@ -82,6 +89,14 @@ const AccordianMenu = ({ matches, correctText, text, check }) => {
               }}
             >
               Plagarism Check
+            </button>
+            <button
+              onClick={() => {
+                handlesubmit();
+              }}
+              disabled={!text || !title}
+            >
+              Submit Document
             </button>
           </div>
         </div>
