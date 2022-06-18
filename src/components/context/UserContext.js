@@ -9,12 +9,40 @@ export const UserAuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { currentUser } = useAuth();
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    if (currentUser && !currentUser.uid) {
-      navigate("/login");
-      setLoading(true);
+    async function check() {
+      if (!token) {
+        navigate("/login");
+        setLoading(true);
+      } else {
+        setLoading(true);
+        fetch("https://oysterbackend.herokuapp.com/user/login", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            if (result === true) {
+              setLoading(false);
+            } else {
+              setLoading(true);
+              navigate("/login");
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+            navigate("/login");
+            setLoading(true);
+          });
+      }
+      if (currentUser && !currentUser.uid) {
+        navigate("/login");
+        setLoading(true);
+      }
     }
-  }, [currentUser]);
+    check();
+  }, [currentUser, token]);
 
   return <UserContext.Provider>{!loading && children}</UserContext.Provider>;
 };

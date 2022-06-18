@@ -1,10 +1,31 @@
-import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import logo from "../../../assets/images/Oyster logo.png";
 import profile from "../../../assets/images/prfimg.png";
 const Sidebar = () => {
+  const navigate = useNavigate();
   const location = useLocation();
+  const [userDetails, setUserDetails] = useState();
+  const token = localStorage.getItem("token");
+  const fetchDetials = () => {
+    fetch("https://oysterbackend.herokuapp.com/user/details", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUserDetails(data);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+  useEffect(() => {
+    fetchDetials();
+  }, [token]);
   return (
     <div className="sidemenu">
       <div className="sidemenu_brand">
@@ -12,8 +33,8 @@ const Sidebar = () => {
       </div>
       <div className="sidemenu_profile">
         <img src={profile} alt="" />
-        <h5>Ashish Yadav</h5>
-        <p>ashish_19@gmail.com</p>
+        <h5>{userDetails?.name}</h5>
+        <p>{userDetails?.email}</p>
       </div>
       <div className="sidebar_menu">
         {/* Dashboard */}
@@ -64,7 +85,7 @@ const Sidebar = () => {
         </NavLink>
         {/* Clinic */}
         <NavLink
-          to="clinicscreen"
+          to="/texteditor"
           className={(navLink) =>
             navLink.isActive ? "sidebar_menu_item checked" : "sidebar_menu_item"
           }
@@ -113,7 +134,11 @@ const Sidebar = () => {
         </NavLink>
       </div>
       <div className="sidemenu_btn">
-        <span>
+        <span
+          onClick={() => {
+            navigate("/logout");
+          }}
+        >
           <svg
             width="24"
             height="24"

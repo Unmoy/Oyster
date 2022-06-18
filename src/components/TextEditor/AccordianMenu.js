@@ -3,7 +3,14 @@ import "./AccordianMenu.css";
 import image from "../../assets/images/circle.png";
 import downArrow from "../../assets/images/chevron-down.png";
 import upArrow from "../../assets/images/chevron-up.png";
-const AccordianMenu = ({ matches, correctText, text, check }) => {
+const AccordianMenu = ({
+  matches,
+  correctText,
+  text,
+  check,
+  handlesubmit,
+  title,
+}) => {
   const [open, setOpen] = useState(true);
   const [grammaropen, setGrammarOpen] = useState(true);
   return (
@@ -15,11 +22,6 @@ const AccordianMenu = ({ matches, correctText, text, check }) => {
               type="checkbox"
               defaultChecked={open}
               onClick={() => setOpen(true)}
-            /> */}
-            {/* <input
-              type="checkbox"
-              defaultChecked={open}
-              onClick={() => setOpen(!open)}
             /> */}
             <div className="accordian_header">
               <h2 className="accordian_title">All Suggestions</h2>
@@ -37,12 +39,10 @@ const AccordianMenu = ({ matches, correctText, text, check }) => {
                     }}
                   >
                     <h6>
-                      {text.substr(match.context.offset, match.context.length)}
+                      {text?.substr(match.offset, match.offset + match.length)}
                     </h6>
-                    <h2>{match.replacements[0].value}</h2>
-                    <button>
-                      <img src={image} alt="" />
-                    </button>
+                    <h2>{match?.replacements[0]?.value}</h2>
+                    <img src={image} alt="error" />
                   </div>
                 </>
               ))}
@@ -75,13 +75,30 @@ const AccordianMenu = ({ matches, correctText, text, check }) => {
       <div className="accordian_container">
         <div className="plagarism_card">
           <h1>Plagarism</h1>
-          <div className="d-flex justify-content-end">
+          <div className="d-flex flex-column justify-content-end">
+            <button disabled>Plagarism Check</button>
             <button
               onClick={() => {
                 check();
               }}
             >
-              Plagarism Check
+              Grammar Check
+            </button>
+            <button
+              onClick={() => {
+                handlesubmit("Pending");
+              }}
+              disabled={!text || !title}
+            >
+              Save Document
+            </button>
+            <button
+              onClick={() => {
+                handlesubmit("Completed");
+              }}
+              disabled={!text || !title}
+            >
+              Submit Document
             </button>
           </div>
         </div>

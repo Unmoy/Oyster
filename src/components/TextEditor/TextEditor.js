@@ -2,16 +2,21 @@ import React, { useState, useEffect } from "react";
 import "./TextEditor.css";
 import AccordianMenu from "./AccordianMenu";
 import { Editor } from "@tinymce/tinymce-react";
+import { UserAuthProvider } from "../context/UserContext";
 import logo from "../../assets/images/O.png";
+import { useNavigate, useParams } from "react-router-dom";
 const TextEditor = () => {
+  const navigate = useNavigate();
   const [text, setText] = useState(
     "Write your text here to checkk thr gramar correctom"
   );
+  const { id } = useParams();
+  const [title, setTitle] = useState("");
   const [matches, setMatches] = useState([]);
   console.log(matches);
   const correctText = (match, index) => {
     const newText = text.replace(
-      text.substring(match.context.offset, match.context.length),
+      text.substring(match.offset, match.offset + match.length),
       match.replacements[0].value
     );
     setText(newText);
@@ -20,6 +25,7 @@ const TextEditor = () => {
     setMatches([]);
     check(newText);
   };
+  const token = localStorage.getItem("token");
   const check = (newText) => {
     console.log(text);
     const encodedParams = new URLSearchParams();
@@ -44,6 +50,9 @@ const TextEditor = () => {
       })
       .catch((err) => console.error(err));
   };
+  useEffect(() => {
+    check();
+  }, []);
   // useEffect(() => {
   //   console.log(text);
 
@@ -80,47 +89,138 @@ const TextEditor = () => {
       console.log("stopo");
     }
   };
+  useEffect(() => {
+    if (id) {
+      fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data) {
+            console.log(data);
+            setText(data.content);
+            setTitle(data.title);
+            check(data.content);
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+  }, [id]);
+  const handlesubmit = (status) => {
+    console.log(title, text);
+    if (id) {
+      fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          content: text,
+          status,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.message === "DOCUMENT_UPDATED_SUCCESSFULLY") {
+            navigate("/dashboard");
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    } else {
+      fetch("https://oysterbackend.herokuapp.com/document", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          content: text,
+          status,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
+            navigate("/dashboard");
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+  };
+
   return (
-    <div className="editor">
-      <img src={logo} alt="" className="brandlogo" />
-      <div>
+    <UserAuthProvider>
+      <div className="editor">
+        <img src={logo} alt="" className="brandlogo" />
         <div>
-          <input
-            type="text"
-            placeholder="Document Title..."
-            className="document_title"
-          />
-        </div>
-        <div className="editor_container">
-          <Editor
-            apiKey="qh47kjs2yf3ekhprumfxo739eefze0v3t0d7op6hffim2s77"
-            onEditorChange={(newValue, editor) => {
-              setText(editor.getContent({ format: "text" }));
-            }}
-            // value={text}
-            initialValue="<p>Hello I am from initial value</p>"
-            onKeyPress={handlekeypress}
-            init={{
-              height: 500,
-              menubar: false,
-              plugins: "lists link",
-              toolbar: " bold italic underline bullist numlist link h1 h2",
-              content_style: "body{font-size:16px}",
-            }}
-          />
-          {/* <Editor
+          <div>
+            <input
+              type="text"
+              value={title}
+              placeholder="Document Title..."
+              className="document_title"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
+          </div>
+          <div className="editor_container">
+            <Editor
+              apiKey="qh47kjs2yf3ekhprumfxo739eefze0v3t0d7op6hffim2s77"
+              onEditorChange={(newValue, editor) => {
+                setText(editor.getContent({ format: "text" }));
+              }}
+              initialValue="<p>Hello I am from initial value</p>"
+              onKeyPress={handlekeypress}
+              init={{
+                height: 500,
+                menubar: false,
+                plugins: "lists link",
+                toolbar: " bold italic underline bullist numlist link h1 h2",
+                content_style: "body{font-size:16px}",
+              }}
+            />
+            {/* <Editor
             editorState={this.state.editorState}
             onChange={this.onChange}
           /> */}
+          </div>
         </div>
+        <AccordianMenu
+          matches={matches}
+          correctText={correctText}
+          text={text}
+          title={title}
+          check={check}
+          handlesubmit={handlesubmit}
+        />
       </div>
-      <AccordianMenu
-        matches={matches}
-        correctText={correctText}
-        text={text}
-        check={check}
-      />
-    </div>
+    </UserAuthProvider>
   );
 };
 

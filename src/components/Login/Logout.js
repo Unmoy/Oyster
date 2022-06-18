@@ -14,6 +14,8 @@ const Logout = () => {
     if (currentUser && !currentUser.uid) {
       navigate("/login");
     }
+    localStorage.setItem("token", "");
+    localStorage.setItem("id", "");
   }, [currentUser]);
   return <>Logout</>;
 };

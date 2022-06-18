@@ -21,6 +21,7 @@ function App() {
         <Route exact path="/grammarly-editor" element={<GrammarlyEditor />} />
         <Route exact path="/simple-editor" element={<SimpleEditor />} />
         <Route exact path="/texteditor" element={<TextEditor />} />
+        <Route exact path="/texteditor/:id" element={<TextEditor />} />
         {/* Dashboard Routes */}
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<Monitor />} />
