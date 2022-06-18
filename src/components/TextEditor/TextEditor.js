@@ -4,18 +4,19 @@ import AccordianMenu from "./AccordianMenu";
 import { Editor } from "@tinymce/tinymce-react";
 import { UserAuthProvider } from "../context/UserContext";
 import logo from "../../assets/images/O.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const TextEditor = () => {
   const navigate = useNavigate();
   const [text, setText] = useState(
     "Write your text here to checkk thr gramar correctom"
   );
+  const { id } = useParams();
   const [title, setTitle] = useState("");
   const [matches, setMatches] = useState([]);
   console.log(matches);
   const correctText = (match, index) => {
     const newText = text.replace(
-      text.substring(match.context.offset, match.context.length),
+      text.substring(match.offset, match.offset + match.length),
       match.replacements[0].value
     );
     setText(newText);
@@ -24,6 +25,7 @@ const TextEditor = () => {
     setMatches([]);
     check(newText);
   };
+  const token = localStorage.getItem("token");
   const check = (newText) => {
     console.log(text);
     const encodedParams = new URLSearchParams();
@@ -48,6 +50,9 @@ const TextEditor = () => {
       })
       .catch((err) => console.error(err));
   };
+  useEffect(() => {
+    check();
+  }, []);
   // useEffect(() => {
   //   console.log(text);
 
@@ -75,34 +80,88 @@ const TextEditor = () => {
   //     // wrapText(elem, match.context.offset, match.context.length);
   //   });
   // }, []);
-
-  const handlesubmit = () => {
-    const token = localStorage.getItem("token");
-    console.log(title, text);
-    fetch("https://oysterbackend.herokuapp.com/document", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        title,
-        content: text,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
-          navigate("/dashboard");
-        } else {
-          console.log(data.message);
-        }
+  useEffect(() => {
+    if (id) {
+      fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.log("error", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data) {
+            console.log(data);
+            setText(data.content);
+            setTitle(data.title);
+            check(data.content);
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+  }, [id]);
+  const handlesubmit = (status) => {
+    console.log(title, text);
+    if (id) {
+      fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          content: text,
+          status,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.message === "DOCUMENT_UPDATED_SUCCESSFULLY") {
+            navigate("/dashboard");
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    } else {
+      fetch("https://oysterbackend.herokuapp.com/document", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          content: text,
+          status,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
+            navigate("/dashboard");
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
   };
 
   return (
@@ -128,6 +187,7 @@ const TextEditor = () => {
                 setText(editor.getContent({ format: "text" }));
               }}
               initialValue={text}
+              value={text}
               init={{
                 height: 500,
                 menubar: false,
