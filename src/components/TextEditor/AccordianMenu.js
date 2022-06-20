@@ -32,10 +32,61 @@ const AccordianMenu = ({
             </div>
             <div className="accordian_card_container">
               {matches.map((match, index) => (
-                <>
+                <div
+                  className="accordian_card--parent"
+                  key={index}
+                  onMouseEnter={() => {
+                    setHover(true);
+                    handleHover(match, index);
+                  }}
+                  onMouseLeave={() => {
+                    setHover(false);
+                    setRawText(text);
+                    console.log("leave", match.shortMessage);
+                  }}
+                  onClick={() => {
+                    correctText(match, index);
+                    console.log(match);
+                  }}
+                >
+                  <div className="accordian_card">
+                    <h6>
+                      {text?.substr(match.offset, match.offset + match.length)}
+                    </h6>
+
+                    <h2>{match?.replacements[0]?.value}</h2>
+                    <img src={image} alt="error" />
+                  </div>
+                  <div className="accordian_card--child">
+                    <h2>{match.shortMessage}</h2>
+                    <p>{match.message}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div className="accordian_container">
+        <ul className="accordian_ul">
+          <li>
+            {/* <input
+              type="checkbox"
+              defaultChecked={grammaropen}
+              onClick={() => setGrammarOpen(!grammaropen)}
+            /> */}
+            <div className="accordian_header">
+              <h2 className="accordian_title">Grammer Suggestions</h2>
+              <img src={grammaropen ? downArrow : upArrow} alt="" />
+            </div>
+            <div className="accordian_card_container">
+              {matches.map((match, index) => {
+                return match.shortMessage === "Spelling mistake" ? (
+                  ""
+                ) : (
                   <div
+                    className="accordian_card--parent"
                     key={index}
-                    className="accordian_card"
                     onMouseEnter={() => {
                       setHover(true);
                       handleHover(match, index);
@@ -50,38 +101,24 @@ const AccordianMenu = ({
                       console.log(match);
                     }}
                   >
-                    <h6>
-                      {text?.substr(match.offset, match.offset + match.length)}
-                    </h6>
-                    <h2>
-                      {match?.replacements[0]?.value}
-                    </h2>
-                    <img src={image} alt="error" />
+                    <div className="accordian_card">
+                      <h6>
+                        {text?.substr(
+                          match.offset,
+                          match.offset + match.length
+                        )}
+                      </h6>
+
+                      <h2>{match?.replacements[0]?.value}</h2>
+                      <img src={image} alt="error" />
+                    </div>
+                    <div className="accordian_card--child">
+                      <h2>{match.shortMessage}</h2>
+                      <p>{match.message}</p>
+                    </div>
                   </div>
-                </>
-              ))}
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div className="accordian_container">
-        <ul className="accordian_ul">
-          <li>
-            <input
-              type="checkbox"
-              defaultChecked={grammaropen}
-              onClick={() => setGrammarOpen(!grammaropen)}
-            />
-            <div className="accordian_header">
-              <h2 className="accordian_title">Grammer Suggestions</h2>
-              <img src={grammaropen ? downArrow : upArrow} alt="" />
-            </div>
-            <div className="accordian_card_container">
-              <div className="accordian_card">
-                <h6>alibaba</h6>
-                <h2>alibaba</h2>
-                <img src={image} alt="" />
-              </div>
+                );
+              })}
             </div>
           </li>
         </ul>

@@ -12,8 +12,10 @@ const TextEditor = () => {
   const [title, setTitle] = useState("");
   const [matches, setMatches] = useState([]);
   const [hover, setHover] = useState(false);
-  const [rawText, setRawText] = useState("");
-  console.log(matches);
+  const [rawText, setRawText] = useState(
+    "<p>Hello I am from initial value</p>"
+  );
+  // console.log(matches);
   const handleHover = (match, index) => {
     console.log("done");
     const newText =
@@ -23,6 +25,39 @@ const TextEditor = () => {
       "</span>" +
       text.substring(match.offset + match.length, text.length);
     setRawText(newText);
+  };
+  const decorateText = (matches) => {
+    let editText = text;
+    let editedText = "";
+    let index = 0;
+    console.log(editText, editedText, index);
+    matches.forEach((match) => {
+      let neweditedText =
+        match.offset - index === 0
+          ? "<span style='text-decoration:underline; text-decoration-thickness: 3px; text-decoration-color:red'>" +
+            editText.substring(
+              match.offset - index,
+              match.offset + match.length - index
+            ) +
+            "</span>"
+          : editText.substring(0, match.offset - index) +
+            +"<span style='text-decoration:underline; text-decoration-thickness: 3px; text-decoration-color:red'>" +
+            editText.substring(
+              match.offset - index,
+              match.offset + match.length - index
+            ) +
+            "</span>";
+      editText = editText.substring(
+        match.offset + match.length - index,
+        editText.length
+      );
+      index = match.offset + match.length;
+      editedText = editedText + neweditedText;
+      console.log(editText, editedText, index);
+    });
+    editedText = editedText + editText;
+    console.log(editText, editedText, index);
+    setRawText(editedText);
   };
   const correctText = (match, index) => {
     const newText =
@@ -43,7 +78,7 @@ const TextEditor = () => {
   };
   const token = localStorage.getItem("token");
   const check = (newText) => {
-    console.log(text);
+    // console.log(text);
     const encodedParams = new URLSearchParams();
     encodedParams.append("language", "en-US");
     encodedParams.append("text", newText ? newText : text);
@@ -61,8 +96,9 @@ const TextEditor = () => {
     fetch("https://dnaber-languagetool.p.rapidapi.com/v2/check", options)
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setMatches(response.matches);
+        decorateText(response.matches);
       })
       .catch((err) => console.error(err));
   };
@@ -97,7 +133,7 @@ const TextEditor = () => {
   //   });
   // }, []);
   const handlekeypress = (e) => {
-    console.log(e);
+    // console.log(e);
     // if (e.keyCode == 32) {
     //   console.log("Space");
     // }
@@ -105,8 +141,10 @@ const TextEditor = () => {
     //   console.log("stopo");
     // }
     if (e.keyCode == 32 || e.keyCode == 46 || e.keyCode == 44) {
-      console.log("Space");
+      // console.log("Space");
       check();
+    } else {
+      decorateText(matches);
     }
   };
   useEffect(() => {
@@ -123,7 +161,7 @@ const TextEditor = () => {
         .then((data) => {
           console.log(data);
           if (data) {
-            console.log(data);
+            // console.log(data);
             setText(data.content);
             setTitle(data.title);
             check(data.content);
@@ -138,7 +176,7 @@ const TextEditor = () => {
     }
   }, [id]);
   const handlesubmit = (status) => {
-    console.log(title, text);
+    // console.log(title, text);
     if (id) {
       fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
         method: "PUT",
@@ -198,10 +236,10 @@ const TextEditor = () => {
     setRawText(text);
   }, [text]);
   useEffect(() => {
-    console.log("Rawset", rawText);
+    // console.log("Rawset", rawText);
   }, [rawText]);
   useEffect(() => {
-    console.log("text", text);
+    // console.log("text", text);
   }, [text]);
 
   return (
@@ -227,7 +265,7 @@ const TextEditor = () => {
                 setText(editor.getContent({ format: "text" }));
                 setRawText(editor.getContent());
               }}
-              initialValue="<p>Hello I am from initial value</p>"
+              initialValue={rawText}
               onKeyPress={handlekeypress}
               init={{
                 height: 500,
