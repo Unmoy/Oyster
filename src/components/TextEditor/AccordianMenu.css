@@ -20,9 +20,11 @@
   margin: 0;
   min-width: 300px;
 }
+
 .accordian_ul li {
   position: relative;
 }
+
 .accordian_ul li input[type="checkbox"] {
   position: absolute;
   cursor: pointer;
@@ -31,13 +33,15 @@
   z-index: 1;
   opacity: 0;
 }
+
 .accordian_ul li i {
   position: absolute;
   transform: translate(-6px, 0);
   margin-top: 16px;
   right: 0;
 }
-.accordian_ul li input[type="checkbox"]:checked ~ .accordian_card_container {
+
+.accordian_ul li input[type="checkbox"]:checked~.accordian_card_container {
   display: none;
   transform: translateX(-50%);
 }
@@ -51,15 +55,19 @@
 .accordian_ul li {
   animation: flipdown 0.5s ease both;
 }
+
 .accordian_ul li:nth-of-type(1) {
   animation-delay: 0.5s;
 }
+
 .accordian_ul li:nth-of-type(2) {
   animation-delay: 0.75s;
 }
+
 .accordian_ul li:nth-of-type(3) {
   animation-delay: 1s;
 }
+
 .accordian_ul li:last-of-type {
   padding-bottom: 0;
 }
@@ -70,23 +78,29 @@
     transform-origin: top center;
     transform: rotateX(-90deg);
   }
+
   5% {
     opacity: 1;
   }
+
   80% {
     transform: rotateX(8deg);
   }
+
   83% {
     transform: rotateX(6deg);
   }
+
   92% {
     transform: rotateX(-3deg);
   }
+
   100% {
     transform-origin: top center;
     transform: rotateX(0deg);
   }
 }
+
 .accordian_card {
   min-width: 300px;
   display: flex;
@@ -97,7 +111,9 @@
   border-radius: 14px;
   padding: 4px;
   margin-bottom: 15px;
+  cursor: pointer;
 }
+
 .accordian_card h6 {
   font-weight: 300;
   font-size: 18px;
@@ -107,6 +123,7 @@
   color: #f24e1e;
   margin-bottom: 0;
 }
+
 .accordian_card h2 {
   font-weight: 400;
   font-size: 18px;
@@ -115,27 +132,44 @@
   color: #000000;
   margin-bottom: 0;
 }
+
 .accordian_card button {
   border: none;
 }
+
 .accordian_card img {
   width: 1.5em;
 }
+
 .accordian_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
 }
+
 .plagarism_card {
   min-width: 300px;
 }
+
 .plagarism_card h1 {
   font-weight: 500;
   font-size: 20px;
   line-height: 35px;
 }
+
 .plagarism_card button {
+  background: #3f87f3;
+  border-radius: 25px;
+  padding: 5px 8px;
+  border: none;
+  font-weight: 500;
+  font-size: 15px;
+  color: #ffffff;
+  margin-top: 10px;
+}
+
+.plagarism_card button:disabled {
   background: #8ebbfd;
   border-radius: 25px;
   padding: 5px 8px;

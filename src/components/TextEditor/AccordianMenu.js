@@ -4,12 +4,15 @@ import image from "../../assets/images/circle.png";
 import downArrow from "../../assets/images/chevron-down.png";
 import upArrow from "../../assets/images/chevron-up.png";
 const AccordianMenu = ({
+  handleHover,
+  setHover,
   matches,
   correctText,
   text,
   check,
   handlesubmit,
   title,
+  setRawText,
 }) => {
   const [open, setOpen] = useState(true);
   const [grammaropen, setGrammarOpen] = useState(true);
@@ -33,6 +36,15 @@ const AccordianMenu = ({
                   <div
                     key={index}
                     className="accordian_card"
+                    onMouseEnter={() => {
+                      setHover(true);
+                      handleHover(match, index);
+                    }}
+                    onMouseLeave={() => {
+                      setHover(false);
+                      setRawText(text);
+                      console.log("leave");
+                    }}
                     onClick={() => {
                       correctText(match, index);
                       console.log(match);
@@ -41,7 +53,9 @@ const AccordianMenu = ({
                     <h6>
                       {text?.substr(match.offset, match.offset + match.length)}
                     </h6>
-                    <h2>{match?.replacements[0]?.value}</h2>
+                    <h2>
+                      {match?.replacements[0]?.value}
+                    </h2>
                     <img src={image} alt="error" />
                   </div>
                 </>

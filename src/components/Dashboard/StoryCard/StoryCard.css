@@ -5,6 +5,7 @@
   height: 200px;
   padding: 10px;
   margin: 20px;
+  cursor: pointer;
 }
 
 .story_card_text {

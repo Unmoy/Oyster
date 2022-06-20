@@ -7,23 +7,39 @@ import logo from "../../assets/images/O.png";
 import { useNavigate, useParams } from "react-router-dom";
 const TextEditor = () => {
   const navigate = useNavigate();
-  const [text, setText] = useState(
-    "Write your text here to checkk thr gramar correctom"
-  );
+  const [text, setText] = useState("Hello I am from initial value");
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [matches, setMatches] = useState([]);
+  const [hover, setHover] = useState(false);
+  const [rawText, setRawText] = useState("");
   console.log(matches);
+  const handleHover = (match, index) => {
+    console.log("done");
+    const newText =
+      text.substring(0, match.offset) +
+      '<span style="background-color:red; color:white">' +
+      text.substring(match.offset, match.offset + match.length) +
+      "</span>" +
+      text.substring(match.offset + match.length, text.length);
+    setRawText(newText);
+  };
   const correctText = (match, index) => {
-    const newText = text.replace(
-      text.substring(match.offset, match.offset + match.length),
-      match.replacements[0].value
-    );
+    const newText =
+      text.substring(0, match.offset) +
+      match.replacements[0].value +
+      text.substring(match.offset + match.length, text.length);
+
+    // const newText = text.replace(
+    //   text.substring(match.offset, match.offset + match.length),
+    //   match.replacements[0].value
+    // );
     setText(newText);
     let newMatches = matches;
     newMatches.splice(index, 1);
     setMatches([]);
     check(newText);
+    console.log("new", newText);
   };
   const token = localStorage.getItem("token");
   const check = (newText) => {
@@ -82,11 +98,15 @@ const TextEditor = () => {
   // }, []);
   const handlekeypress = (e) => {
     console.log(e);
-    if (e.keyCode == 32) {
+    // if (e.keyCode == 32) {
+    //   console.log("Space");
+    // }
+    // if (e.keyCode == 46) {
+    //   console.log("stopo");
+    // }
+    if (e.keyCode == 32 || e.keyCode == 46 || e.keyCode == 44) {
       console.log("Space");
-    }
-    if (e.keyCode == 46) {
-      console.log("stopo");
+      check();
     }
   };
   useEffect(() => {
@@ -107,6 +127,7 @@ const TextEditor = () => {
             setText(data.content);
             setTitle(data.title);
             check(data.content);
+            setRawText(data.content);
           } else {
             console.log(data.message);
           }
@@ -173,6 +194,16 @@ const TextEditor = () => {
     }
   };
 
+  useEffect(() => {
+    setRawText(text);
+  }, [text]);
+  useEffect(() => {
+    console.log("Rawset", rawText);
+  }, [rawText]);
+  useEffect(() => {
+    console.log("text", text);
+  }, [text]);
+
   return (
     <UserAuthProvider>
       <div className="editor">
@@ -194,6 +225,7 @@ const TextEditor = () => {
               apiKey="qh47kjs2yf3ekhprumfxo739eefze0v3t0d7op6hffim2s77"
               onEditorChange={(newValue, editor) => {
                 setText(editor.getContent({ format: "text" }));
+                setRawText(editor.getContent());
               }}
               initialValue="<p>Hello I am from initial value</p>"
               onKeyPress={handlekeypress}
@@ -204,6 +236,7 @@ const TextEditor = () => {
                 toolbar: " bold italic underline bullist numlist link h1 h2",
                 content_style: "body{font-size:16px}",
               }}
+              value={rawText}
             />
             {/* <Editor
             editorState={this.state.editorState}
@@ -218,6 +251,9 @@ const TextEditor = () => {
           title={title}
           check={check}
           handlesubmit={handlesubmit}
+          handleHover={handleHover}
+          setHover={setHover}
+          setRawText={setRawText}
         />
       </div>
     </UserAuthProvider>
