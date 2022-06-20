@@ -18,7 +18,7 @@ const CarouselScreen = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplaySpeed: 2000,
-    autoplay: true,
+    // autoplay: true,
   };
   return (
     <div className="carousel_screen">
@@ -46,7 +46,7 @@ const CarouselScreen = () => {
               <h1 className="carousel_card_header_2">
                 Content Scheduler To The Rescue
               </h1>
-              <p className="carousel_card_description_2">
+              <p className="carousel_card_description">
                 Grammer Suggestion Grammer Suggestion People who do not use
                 punctuation deserve a long sentence. Just kidding! Proofread
                 like a pro! Oyster saves you from a smack in the face by
@@ -61,7 +61,7 @@ const CarouselScreen = () => {
           <div className="carousel_card">
             <div className="me-5">
               <h1 className="carousel_card_header">Plagiarism report</h1>
-              <p className="carousel_card_description_3">
+              <p className="carousel_card_description">
                 Google is the 007 of the writing industry that has a powerful
                 algorithm to identify plagiarized text. Save your reputation and
                 find out if your content contains plagiarized sections before
@@ -78,7 +78,7 @@ const CarouselScreen = () => {
               <h1 className="carousel_card_header_2">
                 Key is keyword research
               </h1>
-              <p className="carousel_card_description_2">
+              <p className="carousel_card_description">
                 The best place to hide a dead body is page 2 of Google search
                 results. Nobody cares what is beyond page 1! Please the SEO Gods
                 with thorough keyword research. Select primary/ secondary
