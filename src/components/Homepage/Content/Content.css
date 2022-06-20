@@ -1,5 +1,5 @@
 .content_wrapper {
-  height: 80vh;
+  min-height: 80vh;
   position: relative;
   display: flex;
   /* justify-content: center; */
@@ -17,13 +17,15 @@
   color: #464646;
   max-width: 700px;
   margin: 30px auto;
+  font-family: "Bitter", serif;
 }
 .content_text p {
-  max-width: 920px;
+  max-width: 57em;
   letter-spacing: -0.015em;
   font-weight: 500;
   font-size: 17px;
   color: #808082;
+  margin-bottom: 30px;
 }
 .content_text button {
   background: #c4c7fb;
@@ -65,3 +67,12 @@
   right: 0;
   width: 4%;
 }
+@media only screen and (min-width: 2000px) {
+  .content_text h3 {
+    font-size: 50px;
+  }
+  .content_text p {
+    font-size: 20px;
+  }
+}
+

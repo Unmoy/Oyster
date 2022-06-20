@@ -3,7 +3,8 @@ import "./Login.css";
 import googleicon from "../../assets/images/login/g-icon.png";
 import loginimage from "../../assets/images/login/loginbottom.png";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/images/Oyster logo.png";
 
 const Login = () => {
   const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -39,7 +40,7 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((result) => {
-        if (result===true) {
+        if (result === true) {
           navigate("/dashboard");
         }
       })
@@ -92,6 +93,11 @@ const Login = () => {
   return (
     <section className="login_screen">
       <div className="container">
+        <div className="login_logo_wrapper">
+          <div className="logo_icon">
+            <img src={logo} alt="logo" />
+          </div>
+        </div>
         <div className="row d-flex align-items-center">
           {status === "login" && (
             <>
@@ -142,8 +148,18 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-              <div className="login_banner col-md-6">
-                <img src={loginimage} alt="" />
+              <div className="col-md-6">
+                <div className="login_border">
+                  <div className="banner_top">
+                    <p>
+                      To Err is Human. <br /> To Use Oyster,
+                      <span className="divine"> Divine.</span>
+                    </p>
+                  </div>
+                  <div className="login_banner">
+                    <img src={loginimage} alt="" className="login_banner_img" />
+                  </div>
+                </div>
               </div>
             </>
           )}
@@ -199,8 +215,18 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-              <div className="login_banner col-md-6">
-                <img src={loginimage} alt="" />
+              <div className="col-md-6">
+                <div className="login_border">
+                  <div className="banner_top">
+                    <p>
+                      To Err is Human. <br /> To Use Oyster,
+                      <span className="divine"> Divine.</span>
+                    </p>
+                  </div>
+                  <div className="login_banner">
+                    <img src={loginimage} alt="" className="login_banner_img" />
+                  </div>
+                </div>
               </div>
             </>
           )}
@@ -246,8 +272,18 @@ const Login = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 login_banner">
-                <img src={loginimage} alt="" className="" />
+              <div className="col-md-6">
+                <div className="login_border">
+                  <div className="banner_top">
+                    <p>
+                      To Err is Human. <br /> To Use Oyster,
+                      <span className="divine"> Divine.</span>
+                    </p>
+                  </div>
+                  <div className="login_banner">
+                    <img src={loginimage} alt="" className="login_banner_img" />
+                  </div>
+                </div>
               </div>
             </>
           )}
