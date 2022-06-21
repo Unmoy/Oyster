@@ -11,6 +11,7 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 // import "draft-js/dist/Draft.css";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
 const TextEditor = () => {
   const navigate = useNavigate();
   const [text, setText] = useState("Hello I am from initial value");
@@ -18,51 +19,60 @@ const TextEditor = () => {
   const [title, setTitle] = useState("");
   const [matches, setMatches] = useState([]);
   const [hover, setHover] = useState(false);
-  const [rawText, setRawText] = useState("");
-  // console.log(matches);
+  const [rawText, setRawText] = useState("<u>Hello I am from values</u>");
+  // console.log("Start", rawText);
+  const token = localStorage.getItem("token");
+
   const handleHover = (match, index) => {
-    console.log("done");
-    const newText =
-      text.substring(0, match.offset) +
-      '<span style="background-color:red; color:white">' +
-      text.substring(match.offset, match.offset + match.length) +
-      "</span>" +
-      text.substring(match.offset + match.length, text.length);
-    setRawText(newText);
+    // console.log("done");
+    // const newText =
+    //   text.substring(0, match.offset) +
+    //   '<span style="background-color:red; color:white">' +
+    //   text.substring(match.offset, match.offset + match.length) +
+    //   "</span>" +
+    //   text.substring(match.offset + match.length, text.length);
+    // setRawText(newText);
   };
+
   const decorateText = (matches) => {
-    let editText = text;
-    let editedText = "";
-    let index = 0;
-    console.log(editText, editedText, index);
-    matches.forEach((match) => {
-      let neweditedText =
-        match.offset - index === 0
-          ? "<span style='text-decoration:underline; text-decoration-thickness: 3px; text-decoration-color:red'>" +
-            editText.substring(
-              match.offset - index,
-              match.offset + match.length - index
-            ) +
-            "</span>"
-          : editText.substring(0, match.offset - index) +
-            +"<span style='text-decoration:underline; text-decoration-thickness: 3px; text-decoration-color:red'>" +
-            editText.substring(
-              match.offset - index,
-              match.offset + match.length - index
-            ) +
-            "</span>";
-      editText = editText.substring(
-        match.offset + match.length - index,
-        editText.length
-      );
-      index = match.offset + match.length;
-      editedText = editedText + neweditedText;
-      console.log(editText, editedText, index);
-    });
-    editedText = editedText + editText;
-    console.log(editText, editedText, index);
-    setRawText(editedText);
+    // let editText = text;
+    // let editedText = "";
+    // let index = 0;
+    // // console.log(editText, editedText, index);
+    // matches?.forEach((match) => {
+    //   let neweditedText;
+    //   if (match.offset - index === 0) {
+    //     neweditedText =
+    //       "<span style='text-decoration:underline; text-decoration-thickness: 3px; text-decoration-color:red'>" +
+    //       editText.substring(
+    //         match.offset - index,
+    //         match.offset + match.length - index
+    //       ) +
+    //       "</span>";
+    //   } else {
+    //     neweditedText =
+    //       editText.substring(0, match.offset - index) +
+    //       "<span style='text-decoration:underline; text-decoration-thickness: 3px; text-decoration-color:red'>" +
+    //       editText.substring(
+    //         match.offset - index,
+    //         match.offset + match.length - index
+    //       ) +
+    //       "</span>";
+    //   }
+    //   editText = editText.substring(
+    //     match.offset + match.length - index,
+    //     editText.length
+    //   );
+    //   index = match.offset + match.length;
+    //   editedText = editedText + neweditedText;
+    //   // con/sole.log(editText, editedText, index);
+    // });
+    // editedText = editedText + editText;
+    // // console.log(editText, editedText, index);
+    // setRawText(editedText);
+    // setContent(editedText);
   };
+
   const correctText = (match, index) => {
     const newText =
       text.substring(0, match.offset) +
@@ -78,9 +88,9 @@ const TextEditor = () => {
     newMatches.splice(index, 1);
     setMatches([]);
     check(newText);
-    console.log("new", newText);
+    // console.log("new", newText);
   };
-  const token = localStorage.getItem("token");
+
   const check = (newText) => {
     // console.log(text);
     const encodedParams = new URLSearchParams();
@@ -102,7 +112,7 @@ const TextEditor = () => {
       .then((response) => {
         // console.log(response);
         setMatches(response.matches);
-        decorateText(response.matches);
+        // decorateText(response.matches);
       })
       .catch((err) => console.error(err));
   };
@@ -136,21 +146,17 @@ const TextEditor = () => {
   //     // wrapText(elem, match.context.offset, match.context.length);
   //   });
   // }, []);
+
   const handlekeypress = (e) => {
-    // console.log(e);
-    // if (e.keyCode == 32) {
-    //   console.log("Space");
-    // }
-    // if (e.keyCode == 46) {
-    //   console.log("stopo");
-    // }
     if (e.keyCode == 32 || e.keyCode == 46 || e.keyCode == 44) {
       // console.log("Space");
       check();
+      saveContent(title, text);
     } else {
-      decorateText(matches);
+      // decorateText(matches);
     }
   };
+
   useEffect(() => {
     if (id) {
       fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
@@ -169,7 +175,7 @@ const TextEditor = () => {
             setText(data.content);
             setTitle(data.title);
             check(data.content);
-            setRawText(data.content);
+            // setRawText(data.content);
           } else {
             console.log(data.message);
           }
@@ -179,6 +185,11 @@ const TextEditor = () => {
         });
     }
   }, [id]);
+
+  const saveContent = (heading, body) => {
+    console.log("SAVE", heading, body);
+  };
+
   const handlesubmit = (status) => {
     // console.log(title, text);
     if (id) {
@@ -207,44 +218,35 @@ const TextEditor = () => {
         .catch((error) => {
           console.log("error", error);
         });
-    } else {
-      fetch("https://oysterbackend.herokuapp.com/document", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          title,
-          content: text,
-          status,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
-            navigate("/dashboard");
-          } else {
-            console.log(data.message);
-          }
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
     }
+    // else {
+    // fetch("https://oysterbackend.herokuapp.com/document", {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify({
+    //     title,
+    //     content: text,
+    //     status,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
+    //       navigate("/dashboard");
+    //     } else {
+    //       console.log(data.message);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //   });
+    // }
   };
-
-  useEffect(() => {
-    setRawText(text);
-  }, [text]);
-  useEffect(() => {
-    // console.log("Rawset", rawText);
-  }, [rawText]);
-  useEffect(() => {
-    // console.log("text", text);
-  }, [text]);
 
   // console.log(content);
   // const handleChange = (newContent) => {
@@ -256,10 +258,21 @@ const TextEditor = () => {
       ContentState.createFromBlockArray(convertFromHTML(text))
     )
   );
-  console.log(content);
+  // console.log(content);
   const handleChange = (content) => {
-    setContent(content.blocks[0].text);
+    // setContent(content.blocks[0].text);
+    setText(content.blocks[0].text);
+    // console.log(content);
   };
+
+  useEffect(() => {
+    console.log("Content", content);
+  }, [content]);
+  useEffect(() => {
+    // decorateText(text);
+    setContent(text);
+    console.log("text", text);
+  }, [text]);
   return (
     <UserAuthProvider>
       <div className="editor">
@@ -301,6 +314,7 @@ const TextEditor = () => {
               defaultEditorState={content}
               onChange={handleChange}
               onKeyPress={handlekeypress}
+              // value={rawText}
               toolbar={{
                 options: ["inline", "list", "blockType"],
                 inline: {
