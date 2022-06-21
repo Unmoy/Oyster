@@ -37,16 +37,16 @@ const AccordianMenu = ({
                   key={index}
                   onMouseEnter={() => {
                     setHover(true);
-                    handleHover(match, index);
+                    // handleHover(match, index);
                   }}
                   onMouseLeave={() => {
-                    setHover(false);
-                    setRawText(text);
-                    console.log("leave", match.shortMessage);
+                    // setHover(false);
+                    // setRawText(text);
+                    // console.log("leave", match.shortMessage);
                   }}
                   onClick={() => {
                     correctText(match, index);
-                    console.log(match);
+                    // console.log(match);
                   }}
                 >
                   <div className="accordian_card">
@@ -88,17 +88,17 @@ const AccordianMenu = ({
                     className="accordian_card--parent"
                     key={index}
                     onMouseEnter={() => {
-                      setHover(true);
-                      handleHover(match, index);
+                      // setHover(true);
+                      // handleHover(match, index);
                     }}
                     onMouseLeave={() => {
-                      setHover(false);
-                      setRawText(text);
-                      console.log("leave");
+                      // setHover(false);
+                      // setRawText(text);
+                      // console.log("leave");
                     }}
                     onClick={() => {
                       correctText(match, index);
-                      console.log(match);
+                      // console.log(match);
                     }}
                   >
                     <div className="accordian_card">

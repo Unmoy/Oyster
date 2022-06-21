@@ -5,7 +5,7 @@ const StoryCard = ({ document }) => {
   const navigate = useNavigate();
   const [date, setDate] = useState("");
   useEffect(() => {
-    setDate(new Date(document.lastModified).toString().substring(0, 15));
+    setDate(new Date(document?.lastModified).toString().substring(0, 15));
     console.log(date);
   }, [document]);
   return (
@@ -16,12 +16,12 @@ const StoryCard = ({ document }) => {
       }}
     >
       <div className="story_card_text">
-        <h1>{document.title}</h1>
-        <p>{document.content}</p>
+        <h1>{document?.title}</h1>
+        <p>{document?.content}</p>
       </div>
       <div className="story_card_footer">
         <h4>Recent : {date}</h4>
-        <h5>{document.content.length} words</h5>
+        <h5>{document?.content?.length} words</h5>
       </div>
     </div>
   );
