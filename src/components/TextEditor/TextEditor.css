@@ -113,3 +113,7 @@
 .rdw-editor-main {
   overflow: hidden !important;
 }
+.quill {
+  max-width: 600px;
+  margin: auto;
+}

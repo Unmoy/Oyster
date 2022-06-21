@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import "./TextEditor.css";
+import "react-quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
+
 import AccordianMenu from "./AccordianMenu";
 // import { Editor } from "@tinymce/tinymce-react";
 import { UserAuthProvider } from "../context/UserContext";
@@ -11,8 +14,12 @@ import { EditorState, ContentState, convertFromHTML } from "draft-js";
 // import "draft-js/dist/Draft.css";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
+import { createEditor } from "slate";
+import RichTextEditor from "react-rte";
+// Import the Slate components and React plugin.
+import { Slate, Editable, withReact } from "slate-react";
 const TextEditor = () => {
+  const editor = useState(() => withReact(createEditor()));
   const navigate = useNavigate();
   const [text, setText] = useState("<p>Hello I am from initial value</p>");
   const { id } = useParams();
@@ -116,36 +123,6 @@ const TextEditor = () => {
       })
       .catch((err) => console.error(err));
   };
-  useEffect(() => {
-    check();
-  }, []);
-  // useEffect(() => {
-  //   console.log(text);
-
-  //   // function wrapText(elem, start, length) {
-  //   //   console.log(elem);
-  //   //   var before = text.substring(0, start);
-  //   //   var after = text.substring(start + length, text.length);
-  //   //   var letters = text.substring(start, start + length);
-  //   //   elem.innerHTML = "";
-  //   //   var text1 = document.createTextNode(before);
-  //   //   var text2 = document.createElement("span");
-  //   //   text2.style.color = "red";
-  //   //   text2.innerHTML = letters;
-  //   //   var text3 = document.createTextNode(after);
-  //   //   elem.appendChild(text1);
-  //   //   elem.appendChild(text2);
-  //   //   elem.appendChild(text3);
-  //   //   console.log(text3);
-  //   // }
-
-  //   var elem = document.getElementById("grammertext");
-  //   // wrapText(elem, text.length - 6, 6);
-
-  //   matches.map((match) => {
-  //     // wrapText(elem, match.context.offset, match.context.length);
-  //   });
-  // }, []);
 
   const handlekeypress = (e) => {
     console.log("key");
@@ -158,36 +135,6 @@ const TextEditor = () => {
       // decorateText(matches);
     }
   };
-
-  useEffect(() => {
-    if (id) {
-      fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          if (data) {
-            // console.log(data);
-            setText(data.content);
-            setTitle(data.title);
-            check(data.content);
-            // console.log("hbkvilhvv", data.content);
-            setContent(data.content);
-          } else {
-            console.log(data.message);
-          }
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    }
-  }, [id]);
 
   const saveContent = (heading, body) => {
     console.log("SAVE", heading, body);
@@ -275,11 +222,6 @@ const TextEditor = () => {
     // }
   };
 
-  // console.log(content);
-  // const handleChange = (newContent) => {
-  //   const text2 = JSON.stringify(newContent);
-  //   console.log(text2);
-  // };
   const [content, setContent] = useState(() =>
     EditorState.createWithContent(
       ContentState.createFromBlockArray(convertFromHTML(text))
@@ -292,6 +234,38 @@ const TextEditor = () => {
     setContent(content.blocks[0].text);
     // console.log(content);
   };
+  useEffect(() => {
+    check();
+  }, []);
+  useEffect(() => {
+    if (id) {
+      fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data) {
+            // console.log(data);
+            setText(data.content);
+            setTitle(data.title);
+            check(data.content);
+            // console.log("hbkvilhvv", data.content);
+            setContent(data.content);
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    }
+  }, [id]);
 
   useEffect(() => {
     console.log("Content", content);
@@ -301,6 +275,17 @@ const TextEditor = () => {
     // setContent(text);
     console.log("text", text);
   }, [text]);
+  const [newcontent, setValue] = useState(RichTextEditor.createEmptyValue());
+  const handleTxextEEditor = (value) => {
+    console.log(value);
+  };
+  const [body, setBody] = useState("");
+  console.log(body);
+  const handleBody = (value) => {
+    console.log("HTML", value);
+    const newText = value.replace(/<[^>]+>/g, "");
+    setBody(newText);
+  };
   return (
     <UserAuthProvider>
       <div className="editor">
@@ -335,14 +320,17 @@ const TextEditor = () => {
               }}
               value={rawText}
             /> */}
-            <Editor
+            <ReactQuill
+              onChange={handleBody}
+              onKeyDown={handlekeypress}
+            ></ReactQuill>
+            {/* <RichTextEditor value={newcontent} onChange={handleTxextEEditor} /> */}
+            {/* <Editor
               toolbarClassName="toolbar-class"
               wrapperClassName="wrapper-class"
               editorClassName="editor-class"
               defaultEditorState={content}
               onChange={handleChange}
-              onKeyPress={handlekeypress}
-              // value={rawText}
               toolbar={{
                 options: ["inline", "list", "blockType"],
                 inline: {
@@ -359,7 +347,7 @@ const TextEditor = () => {
                   options: ["H1", "H2"],
                 },
               }}
-            />
+            /> */}
           </div>
         </div>
         <AccordianMenu
