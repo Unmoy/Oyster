@@ -148,10 +148,12 @@ const TextEditor = () => {
   // }, []);
 
   const handlekeypress = (e) => {
+    console.log("key");
     if (e.keyCode == 32 || e.keyCode == 46 || e.keyCode == 44) {
       // console.log("Space");
       check();
       saveContent(title, text);
+      console.log("key");
     } else {
       // decorateText(matches);
     }
@@ -175,7 +177,8 @@ const TextEditor = () => {
             setText(data.content);
             setTitle(data.title);
             check(data.content);
-            // setRawText(data.content);
+            // console.log("hbkvilhvv", data.content);
+            setContent(data.content);
           } else {
             console.log(data.message);
           }
@@ -188,6 +191,30 @@ const TextEditor = () => {
 
   const saveContent = (heading, body) => {
     console.log("SAVE", heading, body);
+    fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        title: heading,
+        content: body,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message === "DOCUMENT_UPDATED_SUCCESSFULLY") {
+          console.log(data.message);
+        } else {
+          console.log(data.message);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
   };
 
   const handlesubmit = (status) => {
@@ -262,6 +289,7 @@ const TextEditor = () => {
   const handleChange = (content) => {
     // setContent(content.blocks[0].text);
     setText(content.blocks[0].text);
+    setContent(content.blocks[0].text);
     // console.log(content);
   };
 
@@ -270,7 +298,7 @@ const TextEditor = () => {
   }, [content]);
   useEffect(() => {
     // decorateText(text);
-    setContent(text);
+    // setContent(text);
     console.log("text", text);
   }, [text]);
   return (
