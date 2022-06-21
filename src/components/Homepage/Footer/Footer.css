@@ -8,9 +8,11 @@
   font-size: 44px;
   max-width: 600px;
   color: rgba(0, 0, 0, 0.58);
+  font-family: "Bitter";
 }
 .footer_container span {
   color: #fff;
+  font-family: "Bitter";
 }
 .footer_container button {
   background: #c4c7fb;

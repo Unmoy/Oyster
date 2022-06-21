@@ -82,3 +82,34 @@
   border: 2px solid #eee;
   overflow: visible !important;
 }
+.toolbar-class {
+  /* max-width: 50em !important; */
+  margin: auto;
+  flex-direction: column !important;
+  position: absolute;
+  left: 0%;
+  top: 40%;
+  transform: translateY(-50%, -50%);
+}
+.editor-class {
+  width: 50em !important;
+  margin: auto;
+  /* background-color: blue !important; */
+  position: absolute;
+  left: 10%;
+  top: 20%;
+  height: 300px !important;
+  box-shadow: 0 12px 48px rgb(109 117 141 / 20%);
+}
+.wrapper-class {
+  display: flex;
+}
+.rdw-inline-wrapper {
+  flex-direction: column;
+}
+.rdw-list-wrapper {
+  flex-direction: column;
+}
+.rdw-editor-main {
+  overflow: hidden !important;
+}

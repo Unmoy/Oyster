@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import "./TextEditor.css";
 import AccordianMenu from "./AccordianMenu";
-import { Editor } from "@tinymce/tinymce-react";
+// import { Editor } from "@tinymce/tinymce-react";
 import { UserAuthProvider } from "../context/UserContext";
 import logo from "../../assets/images/O.png";
 import { useNavigate, useParams } from "react-router-dom";
+// import { EditorState } from "draft-js";
+import { EditorState, ContentState, convertFromHTML } from "draft-js";
+// import JoditEditor from "jodit-react";
+// import "draft-js/dist/Draft.css";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 const TextEditor = () => {
   const navigate = useNavigate();
   const [text, setText] = useState("Hello I am from initial value");
@@ -12,9 +18,7 @@ const TextEditor = () => {
   const [title, setTitle] = useState("");
   const [matches, setMatches] = useState([]);
   const [hover, setHover] = useState(false);
-  const [rawText, setRawText] = useState(
-    "<p>Hello I am from initial value</p>"
-  );
+  const [rawText, setRawText] = useState("");
   // console.log(matches);
   const handleHover = (match, index) => {
     console.log("done");
@@ -242,6 +246,20 @@ const TextEditor = () => {
     // console.log("text", text);
   }, [text]);
 
+  // console.log(content);
+  // const handleChange = (newContent) => {
+  //   const text2 = JSON.stringify(newContent);
+  //   console.log(text2);
+  // };
+  const [content, setContent] = useState(() =>
+    EditorState.createWithContent(
+      ContentState.createFromBlockArray(convertFromHTML(text))
+    )
+  );
+  console.log(content);
+  const handleChange = (content) => {
+    setContent(content.blocks[0].text);
+  };
   return (
     <UserAuthProvider>
       <div className="editor">
@@ -259,7 +277,7 @@ const TextEditor = () => {
             />
           </div>
           <div className="editor_container">
-            <Editor
+            {/* <Editor
               apiKey="qh47kjs2yf3ekhprumfxo739eefze0v3t0d7op6hffim2s77"
               onEditorChange={(newValue, editor) => {
                 setText(editor.getContent({ format: "text" }));
@@ -271,15 +289,35 @@ const TextEditor = () => {
                 height: 500,
                 menubar: false,
                 plugins: "lists link",
-                toolbar: " bold italic underline bullist numlist link h1 h2",
+                toolbar: "bold italic underline bullist numlist link h1 h2",
                 content_style: "body{font-size:16px}",
               }}
               value={rawText}
+            /> */}
+            <Editor
+              toolbarClassName="toolbar-class"
+              wrapperClassName="wrapper-class"
+              editorClassName="editor-class"
+              defaultEditorState={content}
+              onChange={handleChange}
+              onKeyPress={handlekeypress}
+              toolbar={{
+                options: ["inline", "list", "blockType"],
+                inline: {
+                  inDropdown: false,
+                  options: ["bold", "italic", "underline"],
+                },
+                list: {
+                  inDropdown: false,
+                  options: ["unordered", "ordered"],
+                },
+                link: { inDropdown: false },
+                blockType: {
+                  inDropdown: false,
+                  options: ["H1", "H2"],
+                },
+              }}
             />
-            {/* <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
-          /> */}
           </div>
         </div>
         <AccordianMenu

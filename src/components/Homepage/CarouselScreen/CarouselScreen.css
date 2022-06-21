@@ -126,7 +126,7 @@
 /* Carousel CSS */
 .slick-dots {
   padding-bottom: 30px !important;
-  width: 500px !important;
+  width: 450px !important;
   height: 25px !important;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -160,6 +160,9 @@
   display: none !important;
 }
 @media only screen and (min-width: 2000px) {
+  .carousel_card {
+    justify-content: space-evenly;
+  }
   .carousel_card_header_2 {
     max-width: 11em;
   }
