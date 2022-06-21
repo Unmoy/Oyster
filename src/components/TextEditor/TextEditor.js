@@ -13,7 +13,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 const TextEditor = () => {
   const navigate = useNavigate();
-  const [text, setText] = useState("Hello I am from initial value");
+  const [text, setText] = useState("<p>Hello I am from initial value</p>");
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [matches, setMatches] = useState([]);
