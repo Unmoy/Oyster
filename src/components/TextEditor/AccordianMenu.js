@@ -13,11 +13,13 @@ const AccordianMenu = ({
   handlesubmit,
   title,
   setRawText,
+  save,
 }) => {
   const [open, setOpen] = useState(true);
   const [grammaropen, setGrammarOpen] = useState(true);
   return (
     <div>
+      <span>{save ? "Document Saved" : "Saving Document"}</span>
       <div className="accordian_container">
         <ul className="accordian_ul">
           <li>

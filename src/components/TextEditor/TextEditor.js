@@ -21,12 +21,13 @@ import { Slate, Editable, withReact } from "slate-react";
 const TextEditor = () => {
   const editor = useState(() => withReact(createEditor()));
   const navigate = useNavigate();
-  const [text, setText] = useState("<p>Hello I am from initial value</p>");
+  const [text, setText] = useState("");
   const { id } = useParams();
   const [title, setTitle] = useState("");
   const [matches, setMatches] = useState([]);
   const [hover, setHover] = useState(false);
   const [rawText, setRawText] = useState("<u>Hello I am from values</u>");
+  const [save, setSave] = useState(false);
   // console.log("Start", rawText);
   const token = localStorage.getItem("token");
 
@@ -91,6 +92,7 @@ const TextEditor = () => {
     //   match.replacements[0].value
     // );
     setText(newText);
+    setRawText(newText);
     let newMatches = matches;
     newMatches.splice(index, 1);
     setMatches([]);
@@ -125,12 +127,13 @@ const TextEditor = () => {
   };
 
   const handlekeypress = (e) => {
-    console.log("key");
-    if (e.keyCode == 32 || e.keyCode == 46 || e.keyCode == 44) {
+    // console.log("key", e);
+    if (e.keyCode == 32 || e.keyCode == 190 || e.keyCode == 188) {
       // console.log("Space");
       check();
+      console.log("SAVE DOC", title, text);
       saveContent(title, text);
-      console.log("key");
+      // console.log("key");
     } else {
       // decorateText(matches);
     }
@@ -154,6 +157,7 @@ const TextEditor = () => {
       .then((data) => {
         console.log(data);
         if (data.message === "DOCUMENT_UPDATED_SUCCESSFULLY") {
+          setSave(true);
           console.log(data.message);
         } else {
           console.log(data.message);
@@ -256,7 +260,8 @@ const TextEditor = () => {
             setTitle(data.title);
             check(data.content);
             // console.log("hbkvilhvv", data.content);
-            setContent(data.content);
+            setRawText(data.content);
+            console.log("SET");
           } else {
             console.log(data.message);
           }
@@ -267,24 +272,31 @@ const TextEditor = () => {
     }
   }, [id]);
 
-  useEffect(() => {
-    console.log("Content", content);
-  }, [content]);
-  useEffect(() => {
-    // decorateText(text);
-    // setContent(text);
-    console.log("text", text);
-  }, [text]);
-  const [newcontent, setValue] = useState(RichTextEditor.createEmptyValue());
-  const handleTxextEEditor = (value) => {
-    console.log(value);
-  };
-  const [body, setBody] = useState("");
-  console.log(body);
+  // useEffect(() => {
+  //   console.log("Content", content);
+  // }, [content]);
+  // useEffect(() => {
+  //   // decorateText(text);
+  //   // setContent(text);
+  //   console.log("text", text);
+  // }, [text]);
+  // const [newcontent, setValue] = useState(RichTextEditor.createEmptyValue());
+  // const handleTxextEEditor = (value) => {
+  //   console.log(value);
+  // };
+  // const [body, setBody] = useState("");
+  // console.log(body);
   const handleBody = (value) => {
-    console.log("HTML", value);
     const newText = value.replace(/<[^>]+>/g, "");
-    setBody(newText);
+    console.log("HTML", value, newText.length);
+    let span = document.createElement("span");
+    span.innerHTML = value;
+    console.log("InnerHTML", span.innerHTML, span.innerText);
+    // setBody(newText);s
+    setText(newText);
+    setRawText(newText);
+    setSave(false);
+    console.log("TEXT && RAWTEXT", text, rawText);
   };
   return (
     <UserAuthProvider>
@@ -323,6 +335,8 @@ const TextEditor = () => {
             <ReactQuill
               onChange={handleBody}
               onKeyDown={handlekeypress}
+              value={rawText}
+              preserveWhitespace={true}
             ></ReactQuill>
             {/* <RichTextEditor value={newcontent} onChange={handleTxextEEditor} /> */}
             {/* <Editor
@@ -360,6 +374,7 @@ const TextEditor = () => {
           handleHover={handleHover}
           setHover={setHover}
           setRawText={setRawText}
+          save={save}
         />
       </div>
     </UserAuthProvider>
