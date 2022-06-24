@@ -28,9 +28,25 @@ const TextEditor = () => {
   const [hover, setHover] = useState(false);
   const [rawText, setRawText] = useState("<u>Hello I am from values</u>");
   const [save, setSave] = useState(false);
+  const [plagStatus, setPlagStatus] = useState("none");
+  const [plagData, setPlagData] = useState({});
+  // const [counter, setCounter] = useState(0);
   // console.log("Start", rawText);
   const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (!save) {
+      const interval = setInterval(() => {
+        // setCounter(counter + 1);
+        // console.log(counter);
+        console.log("timer");
+        if (!save) {
+          saveContent(title, text);
+        }
+      }, 5000);
 
+      return () => clearInterval(interval);
+    }
+  }, [save]);
   const handleHover = (match, index) => {
     // console.log("done");
     // const newText =
@@ -100,6 +116,69 @@ const TextEditor = () => {
     // console.log("new", newText);
   };
 
+  const checkWebHook = (scanID) => {
+    fetch(`https://oysterbackend.herokuapp.com/document/webhook/${scanID}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log(data);
+        if (data.status === "pending") {
+          console.log(
+            "pending",
+            data,
+            data.result,
+            data.result.internet.length
+          );
+          setPlagStatus("pending");
+          setPlagData(data.result);
+          checkWebHook(scanID);
+        } else if (data.status === "completed") {
+          setPlagStatus("completed");
+          console.log("completed", data);
+          setPlagData(data.scanResult.results);
+        } else {
+          console.log(data.message);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
+  const checkPlagarism = (PlagarismContent) => {
+    console.log("PlagCheck", PlagarismContent);
+    fetch(`https://oysterbackend.herokuapp.com/document/${id}/plagarism`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        content: PlagarismContent,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message === "SCAN_CREATED_SUCCESSFULLY") {
+          checkWebHook(data.scanId);
+          console.log(data);
+        } else {
+          console.log(data.message);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   const check = (newText) => {
     // console.log(text);
     const encodedParams = new URLSearchParams();
@@ -139,8 +218,8 @@ const TextEditor = () => {
     }
   };
 
-  const saveContent = (heading, body) => {
-    console.log("SAVE", heading, body);
+  const saveContent = (heading, Savebody) => {
+    console.log("SAVE", heading, Savebody);
     fetch(`https://oysterbackend.herokuapp.com/document/${id}`, {
       method: "PUT",
       headers: {
@@ -150,7 +229,7 @@ const TextEditor = () => {
       },
       body: JSON.stringify({
         title: heading,
-        content: body,
+        content: Savebody,
       }),
     })
       .then((response) => response.json())
@@ -288,15 +367,16 @@ const TextEditor = () => {
   // console.log(body);
   const handleBody = (value) => {
     const newText = value.replace(/<[^>]+>/g, "");
-    console.log("HTML", value, newText.length);
-    let span = document.createElement("span");
-    span.innerHTML = value;
-    console.log("InnerHTML", span.innerHTML, span.innerText);
+    // console.log("HTML", value, newText.length);
+    // let span = document.createElement("span");
+    // span.innerHTML = value;
+    // console.log("InnerHTML", span.innerHTML, span.innerText);
     // setBody(newText);s
     setText(newText);
-    setRawText(newText);
+    setRawText(value);
     setSave(false);
-    console.log("TEXT && RAWTEXT", text, rawText);
+    // console.log("TEXT && RAWTEXT", text, rawText);
+    console.log("TextUpdated", newText);
   };
   return (
     <UserAuthProvider>
@@ -375,6 +455,9 @@ const TextEditor = () => {
           setHover={setHover}
           setRawText={setRawText}
           save={save}
+          checkPlagarism={checkPlagarism}
+          plagStatus={plagStatus}
+          plagData={plagData}
         />
       </div>
     </UserAuthProvider>

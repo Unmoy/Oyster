@@ -3,6 +3,7 @@ import "./AccordianMenu.css";
 import image from "../../assets/images/circle.png";
 import downArrow from "../../assets/images/chevron-down.png";
 import upArrow from "../../assets/images/chevron-up.png";
+import { useNavigate } from "react-router-dom";
 const AccordianMenu = ({
   handleHover,
   setHover,
@@ -14,7 +15,11 @@ const AccordianMenu = ({
   title,
   setRawText,
   save,
+  checkPlagarism,
+  plagStatus,
+  plagData,
 }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(true);
   const [grammaropen, setGrammarOpen] = useState(true);
   return (
@@ -129,33 +134,83 @@ const AccordianMenu = ({
         <div className="plagarism_card">
           <h1>Plagarism</h1>
           <div className="d-flex flex-column justify-content-end">
-            <button disabled>Plagarism Check</button>
+            {plagData && (
+              <div className="accordian_card_container">
+                {plagData.score && (
+                  <>
+                    <p>Identical Words:{plagData.score.identicalWords}</p>
+                    <p>
+                      Minor Changed Words:{plagData.score.minorChangedWords}
+                    </p>
+                    <p>Similar Words: {plagData.score.relatedMeaningWords}</p>
+                    <p>Plagarism %: {plagData.score.aggregatedScore}%</p>
+                  </>
+                )}
+                {plagData.internet &&
+                  plagData.internet.map((plag, index) => {
+                    return (
+                      <div
+                        className="accordian_card--parent"
+                        key={index}
+                        // onClick={() => {
+                        //   navigate(plag.url);
+                        // }}
+                      >
+                        <div className="accordian_card">
+                          <h2>{plag.title}</h2>
+                          <img src={image} alt="error" />
+                        </div>
+                        <div className="accordian_card--child">
+                          <h2>{plag.introduction}</h2>
+                          <a href={plag.url} target="_blank">
+                            View
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
             <button
               onClick={() => {
-                check();
+                checkPlagarism(text);
               }}
+              disabled={plagStatus === "pending"}
             >
-              Grammar Check
-            </button>
-            <button
-              onClick={() => {
-                handlesubmit("Pending");
-              }}
-              disabled={!text || !title}
-            >
-              Save Document
-            </button>
-            <button
-              onClick={() => {
-                handlesubmit("Completed");
-              }}
-              disabled={!text || !title}
-            >
-              Submit Document
+              {plagStatus === "none"
+                ? "Plagarism Check"
+                : plagStatus === "pending"
+                ? "Plag Check in Progress"
+                : plagStatus === "completed"
+                ? "PlagCheck Done!!"
+                : ""}
             </button>
           </div>
         </div>
       </div>
+      <button
+        onClick={() => {
+          check();
+        }}
+      >
+        Grammar Check
+      </button>
+      <button
+        onClick={() => {
+          handlesubmit("Pending");
+        }}
+        disabled={!text || !title}
+      >
+        Save Document
+      </button>
+      <button
+        onClick={() => {
+          handlesubmit("Completed");
+        }}
+        disabled={!text || !title}
+      >
+        Submit Document
+      </button>
     </div>
   );
 };
