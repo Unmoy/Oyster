@@ -4,9 +4,8 @@
   align-items: center;
   justify-content: center;
 }
-
-.home .image {
-  /* padding-bottom: 60px; */
+.lottie-svg-class {
+  cursor: auto !important;
 }
 
 .home .content {
@@ -43,11 +42,6 @@
   color: #6e6e70;
 }
 
-.home .image img {
-  max-width: 100%;
-  padding: 30px;
-}
-
 .home .content .get_started_btn {
   background: #c4c7fb;
   border: 1px solid #000000;
@@ -64,8 +58,5 @@
 @media only screen and (min-width: 2000px) {
   .home .content {
     max-width: 50em;
-  }
-  .home img {
-    margin-left: 5em;
   }
 }

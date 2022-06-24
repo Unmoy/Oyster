@@ -1,7 +1,8 @@
 import React from "react";
 import "./Header.css";
-import headerImage from "../../../assets/images/header.png";
+import headergif from "../../../assets/images/headerGif.gif";
 import { useNavigate } from "react-router-dom";
+import HeaderGIF from "./HeaderGIF";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -44,8 +45,9 @@ const Header = () => {
               </p>
             </div>
           </div>
-          <div className="image col-md-12 col-lg-6">
-            <img src={headerImage} alt="" />
+          <div className=" image col-md-12 col-lg-6">
+            {/* <img src={headergif} alt="" /> */}
+            <HeaderGIF />
           </div>
         </div>
       </section>
