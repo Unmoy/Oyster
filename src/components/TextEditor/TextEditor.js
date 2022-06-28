@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import "./TextEditor.css";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
-
+import files from "../../assets/images/files.png";
+import downloadcircle from "../../assets/images/arrow-down-circle.png";
 import AccordianMenu from "./AccordianMenu";
 // import { Editor } from "@tinymce/tinymce-react";
 import { UserAuthProvider } from "../context/UserContext";
@@ -378,12 +379,63 @@ const TextEditor = () => {
     // console.log("TEXT && RAWTEXT", text, rawText);
     console.log("TextUpdated", newText);
   };
+  //   class HeaderBlot extends Block { }
+  // HeaderBlot.blotName = 'header';
+  //   HeaderBlot.tagName = ['h1', 'h2'];
+  //   Quill.register(HeaderBlot);
+  const modules = {
+      toolbar: [
+        // [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link"],
+      ],
+    },
+    formats = [
+      "header",
+      "bold",
+      "italic",
+      "underline",
+
+      "list",
+      "bullet",
+      "link",
+    ];
   return (
     <UserAuthProvider>
       <div className="editor">
         <img src={logo} alt="" className="brandlogo" />
         <div>
-          <div>
+          <div className="text_editor_header">
+            <svg
+              width="18"
+              height="19"
+              viewBox="0 0 18 19"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.625 1.5835H6.45C6.15 1.5835 5.85 1.74183 5.625 1.97933C5.4 2.21683 5.25 2.5335 5.25 2.85016V12.9835C5.25 13.3002 5.4 13.6168 5.625 13.8543C5.85 14.0918 6.15 14.2502 6.45 14.2502H13.8C14.1 14.2502 14.4 14.0918 14.625 13.8543C14.85 13.6168 15 13.3002 15 12.9835V5.146L11.625 1.5835Z"
+                stroke="#B3B4C5"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M2.25 6.0166V16.1499C2.25 16.4666 2.4 16.7833 2.625 17.0208C2.85 17.2583 3.15 17.4166 3.45 17.4166H10.8"
+                stroke="#B3B4C5"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M11.25 1.5835V5.54183H15"
+                stroke="#B3B4C5"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
             <input
               type="text"
               value={title}
@@ -393,6 +445,20 @@ const TextEditor = () => {
                 setTitle(e.target.value);
               }}
             />
+            <div className="document_btns">
+              <button className="document_copy">
+                <img src={files} alt="" className="document_btns_icon" />
+                Copy
+              </button>
+              <button className="document_download">
+                <img
+                  src={downloadcircle}
+                  alt=""
+                  className="document_btns_icon"
+                />
+                Download
+              </button>
+            </div>
           </div>
           <div className="editor_container">
             {/* <Editor
@@ -417,6 +483,9 @@ const TextEditor = () => {
               onKeyDown={handlekeypress}
               value={rawText}
               preserveWhitespace={true}
+              className="text_editor_quill"
+              modules={modules}
+              formats={formats}
             ></ReactQuill>
             {/* <RichTextEditor value={newcontent} onChange={handleTxextEEditor} /> */}
             {/* <Editor

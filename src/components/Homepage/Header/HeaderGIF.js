@@ -1,9 +1,8 @@
 import React from "react";
 import Lottie from "react-lottie";
-import * as animationData from "./Oyster.json";
+import * as animationData from "./Oyster.2.json";
 const HeaderGIF = () => {
   const defaultOptions = {
-    // loop: 0,
     animationData: animationData,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",

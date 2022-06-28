@@ -26,9 +26,10 @@
 }
 
 .editor_container {
-  width: 75vw;
-  height: 100%;
+  width: 70vw;
+  height: 50vh;
   margin: auto;
+  /* background-color: aquamarine !important; */
 }
 
 .document_title {
@@ -41,8 +42,34 @@
 .document_title:focus {
   outline: none;
 }
-
-.tox-tinymce {
+.document_btns {
+  position: absolute;
+  right: 40%;
+  top: 7%;
+}
+.document_btns button {
+  border: none;
+  background: none;
+  margin: 0 10px;
+  font-family: "Bitter";
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: -0.015em;
+  vertical-align: middle;
+  color: #b3b4c5;
+}
+.document_btns_icon {
+  margin-right: 5px;
+}
+.document_copy {
+}
+.text_editor_header {
+  /* display: flex; */
+  /* width: 800px !important; */
+  /* position: relative; */
+}
+/* .tox-tinymce {
   margin: auto;
   max-width: 800px;
 }
@@ -53,7 +80,6 @@
 
 .tox .tox-toolbar__group {
   display: block !important;
-  /* background: transparent !important; */
 }
 
 .tox .tox-toolbar,
@@ -83,7 +109,7 @@
   overflow: visible !important;
 }
 .toolbar-class {
-  /* max-width: 50em !important; */
+
   margin: auto;
   flex-direction: column !important;
   position: absolute;
@@ -94,7 +120,7 @@
 .editor-class {
   width: 50em !important;
   margin: auto;
-  /* background-color: blue !important; */
+  
   position: absolute;
   left: 10%;
   top: 20%;
@@ -112,8 +138,44 @@
 }
 .rdw-editor-main {
   overflow: hidden !important;
-}
+} */
 .quill {
-  max-width: 600px;
-  margin: auto;
+  /* min-width: 600px; */
+  display: flex;
+  /* height: 50vh; */
+  /* margin: auto; */
+  /* background-color: #eee !important; */
+  position: relative !important;
+}
+
+.text_editor_quill {
+  /* display: flex; */
+}
+.ql-formats {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px;
+  /* position: absolute !important; */
+  /* left: 0 !important; */
+  /* top: 50% !important; */
+}
+.ql-toolbar.ql-snow {
+  /* display: flex !important;
+  flex-direction: column !important; */
+  /* background-color: red !important; */
+  position: absolute;
+  left: 0%;
+  padding-left: 10px !important;
+  border: none !important;
+}
+
+.ql-container {
+  height: 30em !important;
+  /* background-color: red; */
+  position: absolute !important;
+  left: 16%;
+  top: -4em !important;
+  width: 60em !important;
+  box-shadow: 0 12px 48px rgb(109 117 141 / 20%) !important;
+  border: none !important;
 }
