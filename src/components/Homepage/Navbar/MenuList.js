@@ -5,7 +5,7 @@ export const MenuList = [
   },
   {
     title: "Pricing",
-    url: "/",
+    url: "/pricing",
   },
   {
     title: "Contact us",

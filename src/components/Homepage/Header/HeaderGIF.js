@@ -1,6 +1,6 @@
 import React from "react";
 import Lottie from "react-lottie";
-import * as animationData from "./Oyster.2.json";
+import * as animationData from "./Comp 1.json";
 const HeaderGIF = () => {
   const defaultOptions = {
     animationData: animationData,

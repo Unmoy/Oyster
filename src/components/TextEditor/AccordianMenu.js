@@ -4,6 +4,7 @@ import image from "../../assets/images/circle.png";
 import downArrow from "../../assets/images/chevron-down.png";
 import upArrow from "../../assets/images/chevron-up.png";
 import { useNavigate } from "react-router-dom";
+import Skeleton from "@mui/material/Skeleton";
 const AccordianMenu = ({
   handleHover,
   setHover,
@@ -23,8 +24,7 @@ const AccordianMenu = ({
   const [open, setOpen] = useState(true);
   const [grammaropen, setGrammarOpen] = useState(true);
   return (
-    <div>
-      <span>{save ? "Document Saved" : "Saving Document"}</span>
+    <div className="d-flex flex-column">
       <div className="accordian_container">
         <ul className="accordian_ul">
           <li>
@@ -34,7 +34,9 @@ const AccordianMenu = ({
               onClick={() => setOpen(true)}
             /> */}
             <div className="accordian_header">
-              <h2 className="accordian_title">All Suggestions</h2>
+              <h2 className="accordian_title">
+                All Suggestions <p className="accordian_counter">2</p>
+              </h2>
               <img src={open ? downArrow : upArrow} alt="" />
             </div>
             <div className="accordian_card_container">
@@ -83,7 +85,9 @@ const AccordianMenu = ({
               onClick={() => setGrammarOpen(!grammaropen)}
             /> */}
             <div className="accordian_header">
-              <h2 className="accordian_title">Grammer Suggestions</h2>
+              <h2 className="accordian_title">
+                Grammer Suggestions <p className="accordian_counter">2</p>
+              </h2>
               <img src={grammaropen ? downArrow : upArrow} alt="" />
             </div>
             <div className="accordian_card_container">
@@ -136,16 +140,31 @@ const AccordianMenu = ({
           <div className="d-flex flex-column justify-content-end">
             {plagData && (
               <div className="accordian_card_container">
-                {plagData.score && (
-                  <>
+                {plagData.score ? (
+                  <div className="plagarism_content">
                     <p>Identical Words:{plagData.score.identicalWords}</p>
                     <p>
                       Minor Changed Words:{plagData.score.minorChangedWords}
                     </p>
                     <p>Similar Words: {plagData.score.relatedMeaningWords}</p>
                     <p>Plagarism %: {plagData.score.aggregatedScore}%</p>
-                  </>
+                  </div>
+                ) : (
+                  plagStatus === "pending" && (
+                    <div className="">
+                      <div className="accordian_sleleton">
+                        <Skeleton width={130} />
+                        <Skeleton width={130} />
+                        <Skeleton width={130} />
+                        <Skeleton width={130} />
+                      </div>
+                      <div className="accordian_sleleton_div">
+                        <Skeleton height={60} />
+                      </div>
+                    </div>
+                  )
                 )}
+
                 {plagData.internet &&
                   plagData.internet.map((plag, index) => {
                     return (
@@ -162,8 +181,13 @@ const AccordianMenu = ({
                         </div>
                         <div className="accordian_card--child">
                           <h2>{plag.introduction}</h2>
-                          <a href={plag.url} target="_blank">
-                            View
+                          <a
+                            href={plag.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="plag_url"
+                          >
+                            {plag.url}
                           </a>
                         </div>
                       </div>
@@ -171,46 +195,26 @@ const AccordianMenu = ({
                   })}
               </div>
             )}
-            <button
-              onClick={() => {
-                checkPlagarism(text);
-              }}
-              disabled={plagStatus === "pending"}
-            >
-              {plagStatus === "none"
-                ? "Plagarism Check"
-                : plagStatus === "pending"
-                ? "Plag Check in Progress"
-                : plagStatus === "completed"
-                ? "PlagCheck Done!!"
-                : ""}
-            </button>
+            <div className="d-flex justify-content-end">
+              <button
+                className="plagarism_check_btn"
+                onClick={() => {
+                  checkPlagarism(text);
+                }}
+                disabled={plagStatus === "pending"}
+              >
+                {plagStatus === "none"
+                  ? "Plagrism Check"
+                  : plagStatus === "pending"
+                  ? "Checking"
+                  : plagStatus === "completed"
+                  ? "Check Again"
+                  : ""}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <button
-        onClick={() => {
-          check();
-        }}
-      >
-        Grammar Check
-      </button>
-      <button
-        onClick={() => {
-          handlesubmit("Pending");
-        }}
-        disabled={!text || !title}
-      >
-        Save Document
-      </button>
-      <button
-        onClick={() => {
-          handlesubmit("Completed");
-        }}
-        disabled={!text || !title}
-      >
-        Submit Document
-      </button>
     </div>
   );
 };

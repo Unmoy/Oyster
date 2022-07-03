@@ -52,6 +52,19 @@
   text-decoration: none;
   color: #000;
 }
+.sidebar_menu_div {
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #000;
+}
+.sidebar_menu_div:hover {
+  color: #aaafff;
+  background: #e6ebff;
+}
 
 .menu--icon {
   width: 25px;

@@ -3,6 +3,7 @@
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: space-around;
 }
 
 .brandlogo {
@@ -29,16 +30,23 @@
   width: 70vw;
   height: 50vh;
   margin: auto;
+  position: relative;
   /* background-color: aquamarine !important; */
 }
 
 .document_title {
   border: none;
   position: absolute;
-  top: 7%;
-  left: 12%;
+  top: 10%;
+  left: 13%;
 }
-
+.document_title::placeholder {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 34px;
+  letter-spacing: -0.015em;
+  color: #cccccc;
+}
 .document_title:focus {
   outline: none;
 }
@@ -52,7 +60,7 @@
   background: none;
   margin: 0 10px;
   font-family: "Bitter";
-  font-weight: 500;
+  font-weight: 400;
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.015em;
@@ -61,8 +69,23 @@
 }
 .document_btns_icon {
   margin-right: 5px;
+  width: 13px;
+}
+.save_doc_icon {
+  margin-right: 5px;
+}
+.save_doc_icon path {
+  fill: #b3b4c5;
 }
 .document_copy {
+}
+.save_text {
+  position: absolute;
+  top: -4em;
+  right: 12em;
+  color: #b3b4c5;
+  font-size: 13px;
+  font-family: "Bitter";
 }
 .text_editor_header {
   /* display: flex; */
@@ -155,6 +178,7 @@
   display: flex !important;
   flex-direction: column !important;
   gap: 10px;
+  border-bottom: 1px solid #000;
   /* position: absolute !important; */
   /* left: 0 !important; */
   /* top: 50% !important; */
@@ -163,18 +187,19 @@
   /* display: flex !important;
   flex-direction: column !important; */
   /* background-color: red !important; */
-  position: absolute;
-  left: 0%;
+  position: absolute !important;
+  left: -2% !important;
+  top: 50px !important;
   padding-left: 10px !important;
   border: none !important;
 }
 
 .ql-container {
-  height: 30em !important;
+  height: 33em !important;
   /* background-color: red; */
   position: absolute !important;
-  left: 16%;
-  top: -4em !important;
+  left: 15%;
+  top: -2em !important;
   width: 60em !important;
   box-shadow: 0 12px 48px rgb(109 117 141 / 20%) !important;
   border: none !important;

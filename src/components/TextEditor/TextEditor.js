@@ -407,35 +407,6 @@ const TextEditor = () => {
         <img src={logo} alt="" className="brandlogo" />
         <div>
           <div className="text_editor_header">
-            <svg
-              width="18"
-              height="19"
-              viewBox="0 0 18 19"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M11.625 1.5835H6.45C6.15 1.5835 5.85 1.74183 5.625 1.97933C5.4 2.21683 5.25 2.5335 5.25 2.85016V12.9835C5.25 13.3002 5.4 13.6168 5.625 13.8543C5.85 14.0918 6.15 14.2502 6.45 14.2502H13.8C14.1 14.2502 14.4 14.0918 14.625 13.8543C14.85 13.6168 15 13.3002 15 12.9835V5.146L11.625 1.5835Z"
-                stroke="#B3B4C5"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M2.25 6.0166V16.1499C2.25 16.4666 2.4 16.7833 2.625 17.0208C2.85 17.2583 3.15 17.4166 3.45 17.4166H10.8"
-                stroke="#B3B4C5"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M11.25 1.5835V5.54183H15"
-                stroke="#B3B4C5"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
             <input
               type="text"
               value={title}
@@ -453,7 +424,7 @@ const TextEditor = () => {
               <button className="document_download">
                 <img
                   src={downloadcircle}
-                  alt=""
+                  alt="downloadcircle"
                   className="document_btns_icon"
                 />
                 Download
@@ -461,6 +432,37 @@ const TextEditor = () => {
             </div>
           </div>
           <div className="editor_container">
+            {text && (
+              <span className="save_text">
+                {save ? (
+                  <p>
+                    <svg
+                      width="13"
+                      height="13"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 384 512"
+                      className="save_doc_icon"
+                    >
+                      <path d="M384 128h-128V0L384 128zM256 160H384v304c0 26.51-21.49 48-48 48h-288C21.49 512 0 490.5 0 464v-416C0 21.49 21.49 0 48 0H224l.0039 128C224 145.7 238.3 160 256 160zM255 295L216 334.1V232c0-13.25-10.75-24-24-24S168 218.8 168 232v102.1L128.1 295C124.3 290.3 118.2 288 112 288S99.72 290.3 95.03 295c-9.375 9.375-9.375 24.56 0 33.94l80 80c9.375 9.375 24.56 9.375 33.94 0l80-80c9.375-9.375 9.375-24.56 0-33.94S264.4 285.7 255 295z" />
+                    </svg>
+                    Document Saved
+                  </p>
+                ) : (
+                  <p>
+                    <svg
+                      width="13"
+                      height="13"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 384 512"
+                      className="save_doc_icon"
+                    >
+                      <path d="M352 0C369.7 0 384 14.33 384 32C384 49.67 369.7 64 352 64V74.98C352 117.4 335.1 158.1 305.1 188.1L237.3 256L305.1 323.9C335.1 353.9 352 394.6 352 437V448C369.7 448 384 462.3 384 480C384 497.7 369.7 512 352 512H32C14.33 512 0 497.7 0 480C0 462.3 14.33 448 32 448V437C32 394.6 48.86 353.9 78.86 323.9L146.7 256L78.86 188.1C48.86 158.1 32 117.4 32 74.98V64C14.33 64 0 49.67 0 32C0 14.33 14.33 0 32 0H352zM111.1 128H272C282.4 112.4 288 93.98 288 74.98V64H96V74.98C96 93.98 101.6 112.4 111.1 128zM111.1 384H272C268.5 378.7 264.5 373.7 259.9 369.1L192 301.3L124.1 369.1C119.5 373.7 115.5 378.7 111.1 384V384z" />
+                    </svg>
+                    Saving Document...
+                  </p>
+                )}
+              </span>
+            )}
             {/* <Editor
               apiKey="qh47kjs2yf3ekhprumfxo739eefze0v3t0d7op6hffim2s77"
               onEditorChange={(newValue, editor) => {
@@ -512,6 +514,31 @@ const TextEditor = () => {
               }}
             /> */}
           </div>
+          {/* <div className="accordian_footer_btns d-flex justify-content-end">
+            <button
+              onClick={() => {
+                check();
+              }}
+            >
+              Grammar Check
+            </button>
+            <button
+              onClick={() => {
+                handlesubmit("Pending");
+              }}
+              disabled={!text || !title}
+            >
+              Save Document
+            </button>
+            <button
+              onClick={() => {
+                handlesubmit("Completed");
+              }}
+              disabled={!text || !title}
+            >
+              Submit Document
+            </button>
+          </div> */}
         </div>
         <AccordianMenu
           matches={matches}
