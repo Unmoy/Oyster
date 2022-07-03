@@ -19,6 +19,8 @@ const AccordianMenu = ({
   checkPlagarism,
   plagStatus,
   plagData,
+  addIgnoredWord,
+  addIgnoredRule,
 }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(true);
@@ -53,10 +55,6 @@ const AccordianMenu = ({
                     // setRawText(text);
                     // console.log("leave", match.shortMessage);
                   }}
-                  onClick={() => {
-                    correctText(match, index);
-                    // console.log(match);
-                  }}
                 >
                   <div className="accordian_card">
                     <h6>
@@ -65,6 +63,29 @@ const AccordianMenu = ({
 
                     <h2>{match?.replacements[0]?.value}</h2>
                     <img src={image} alt="error" />
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        correctText(match, index);
+                        // console.log(match);
+                      }}
+                    >
+                      Do
+                    </span>
+                    <span
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        // correctText(match, index);
+                        console.log(match);
+                        if (match.shortMessage === "Spelling mistake") {
+                          addIgnoredWord(match);
+                        } else {
+                          addIgnoredRule(match);
+                        }
+                      }}
+                    >
+                      Ignore
+                    </span>
                   </div>
                   <div className="accordian_card--child">
                     <h2>{match.shortMessage}</h2>

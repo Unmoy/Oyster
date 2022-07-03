@@ -31,8 +31,26 @@ const TextEditor = () => {
   const [save, setSave] = useState(false);
   const [plagStatus, setPlagStatus] = useState("none");
   const [plagData, setPlagData] = useState({});
+  const [ignoredWords, setIgnoredWords] = useState([]);
+  const [ignoredRules, setIgnoredRules] = useState([]);
+  const [ignoredCategories, setIgnoredCategories] = useState([]);
   // const [counter, setCounter] = useState(0);
   // console.log("Start", rawText);
+
+  const addIgnoredRule = (match) => {
+    setIgnoredRules([...ignoredRules, match.rule.id]);
+    check();
+  };
+
+  const addIgnoredWord = (match) => {
+    const newText = text.substring(match.offset, match.offset + match.length);
+    console.log(newText);
+    setIgnoredWords([...ignoredWords, newText]);
+    console.log(newText);
+    setMatches([]);
+    check();
+  };
+
   const token = localStorage.getItem("token");
   useEffect(() => {
     if (!save) {
@@ -42,6 +60,7 @@ const TextEditor = () => {
         console.log("timer");
         if (!save) {
           saveContent(title, text);
+          check(text);
         }
       }, 5000);
 
@@ -185,6 +204,7 @@ const TextEditor = () => {
     const encodedParams = new URLSearchParams();
     encodedParams.append("language", "en-US");
     encodedParams.append("text", newText ? newText : text);
+    encodedParams.append("disabledRules", ignoredRules);
 
     const options = {
       method: "POST",
@@ -200,10 +220,28 @@ const TextEditor = () => {
       .then((response) => response.json())
       .then((response) => {
         // console.log(response);
-        setMatches(response.matches);
+        // setMatches(response.matches);
+        filterMatches(response.matches);
+        console.log(response.matches);
+        // console.log("ignored", ignoredWords);
         // decorateText(response.matches);
       })
       .catch((err) => console.error(err));
+  };
+
+  const filterMatches = (matches) => {
+    let newMatches = matches.filter((match) => {
+      if (match.shortMessage === "Spelling mistake") {
+        const newText = text.substring(
+          match.offset,
+          match.offset + match.length
+        );
+        return !ignoredWords.includes(newText);
+      } else {
+        return true;
+      }
+    });
+    setMatches(newMatches);
   };
 
   const handlekeypress = (e) => {
@@ -376,6 +414,7 @@ const TextEditor = () => {
     setText(newText);
     setRawText(value);
     setSave(false);
+    setMatches([]);
     // console.log("TEXT && RAWTEXT", text, rawText);
     console.log("TextUpdated", newText);
   };
@@ -554,6 +593,8 @@ const TextEditor = () => {
           checkPlagarism={checkPlagarism}
           plagStatus={plagStatus}
           plagData={plagData}
+          addIgnoredWord={addIgnoredWord}
+          addIgnoredRule={addIgnoredRule}
         />
       </div>
     </UserAuthProvider>
