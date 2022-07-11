@@ -1,6 +1,6 @@
 import React from "react";
 import "./Header.css";
-import headergif from "../../../assets/images/headerGif.gif";
+// import headergif from "../../../assets/images/headerGif.gif";
 import { useNavigate } from "react-router-dom";
 import HeaderGIF from "./HeaderGIF";
 

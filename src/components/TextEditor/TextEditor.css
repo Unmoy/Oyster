@@ -5,7 +5,13 @@
   align-items: center;
   justify-content: space-around;
 }
-
+.accordian_menu {
+  width: 350px;
+  /* position: relative; */
+  /* background-color: cadetblue; */
+  max-height: 100vh;
+  padding: 2em 0;
+}
 .brandlogo {
   position: absolute;
   top: 20px;

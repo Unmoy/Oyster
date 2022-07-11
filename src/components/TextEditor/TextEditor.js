@@ -1,26 +1,15 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import "./TextEditor.css";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import files from "../../assets/images/files.png";
 import downloadcircle from "../../assets/images/arrow-down-circle.png";
 import AccordianMenu from "./AccordianMenu";
-// import { Editor } from "@tinymce/tinymce-react";
 import { UserAuthProvider } from "../context/UserContext";
 import logo from "../../assets/images/O.png";
 import { useNavigate, useParams } from "react-router-dom";
-// import { EditorState } from "draft-js";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
-// import JoditEditor from "jodit-react";
-// import "draft-js/dist/Draft.css";
-import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { createEditor } from "slate";
-import RichTextEditor from "react-rte";
-// Import the Slate components and React plugin.
-import { Slate, Editable, withReact } from "slate-react";
+
 const TextEditor = () => {
-  const editor = useState(() => withReact(createEditor()));
   const navigate = useNavigate();
   const [text, setText] = useState("");
   const { id } = useParams();
@@ -219,12 +208,8 @@ const TextEditor = () => {
     fetch("https://dnaber-languagetool.p.rapidapi.com/v2/check", options)
       .then((response) => response.json())
       .then((response) => {
-        // console.log(response);
-        // setMatches(response.matches);
         filterMatches(response.matches);
         console.log(response.matches);
-        // console.log("ignored", ignoredWords);
-        // decorateText(response.matches);
       })
       .catch((err) => console.error(err));
   };
@@ -245,13 +230,11 @@ const TextEditor = () => {
   };
 
   const handlekeypress = (e) => {
-    // console.log("key", e);
     if (e.keyCode == 32 || e.keyCode == 190 || e.keyCode == 188) {
       // console.log("Space");
       check();
       console.log("SAVE DOC", title, text);
       saveContent(title, text);
-      // console.log("key");
     } else {
       // decorateText(matches);
     }
@@ -344,18 +327,6 @@ const TextEditor = () => {
     // }
   };
 
-  const [content, setContent] = useState(() =>
-    EditorState.createWithContent(
-      ContentState.createFromBlockArray(convertFromHTML(text))
-    )
-  );
-  // console.log(content);
-  const handleChange = (content) => {
-    // setContent(content.blocks[0].text);
-    setText(content.blocks[0].text);
-    setContent(content.blocks[0].text);
-    // console.log(content);
-  };
   useEffect(() => {
     check();
   }, []);
@@ -390,41 +361,19 @@ const TextEditor = () => {
     }
   }, [id]);
 
-  // useEffect(() => {
-  //   console.log("Content", content);
-  // }, [content]);
-  // useEffect(() => {
-  //   // decorateText(text);
-  //   // setContent(text);
-  //   console.log("text", text);
-  // }, [text]);
-  // const [newcontent, setValue] = useState(RichTextEditor.createEmptyValue());
-  // const handleTxextEEditor = (value) => {
-  //   console.log(value);
-  // };
-  // const [body, setBody] = useState("");
-  // console.log(body);
   const handleBody = (value) => {
     const newText = value.replace(/<[^>]+>/g, "");
-    // console.log("HTML", value, newText.length);
-    // let span = document.createElement("span");
-    // span.innerHTML = value;
-    // console.log("InnerHTML", span.innerHTML, span.innerText);
-    // setBody(newText);s
+
     setText(newText);
     setRawText(value);
     setSave(false);
     setMatches([]);
-    // console.log("TEXT && RAWTEXT", text, rawText);
+
     console.log("TextUpdated", newText);
   };
-  //   class HeaderBlot extends Block { }
-  // HeaderBlot.blotName = 'header';
-  //   HeaderBlot.tagName = ['h1', 'h2'];
-  //   Quill.register(HeaderBlot);
+
   const modules = {
       toolbar: [
-        // [{ header: [1, 2, false] }],
         ["bold", "italic", "underline"],
         [{ list: "ordered" }, { list: "bullet" }],
         ["link"],
@@ -502,23 +451,6 @@ const TextEditor = () => {
                 )}
               </span>
             )}
-            {/* <Editor
-              apiKey="qh47kjs2yf3ekhprumfxo739eefze0v3t0d7op6hffim2s77"
-              onEditorChange={(newValue, editor) => {
-                setText(editor.getContent({ format: "text" }));
-                setRawText(editor.getContent());
-              }}
-              initialValue={rawText}
-              onKeyPress={handlekeypress}
-              init={{
-                height: 500,
-                menubar: false,
-                plugins: "lists link",
-                toolbar: "bold italic underline bullist numlist link h1 h2",
-                content_style: "body{font-size:16px}",
-              }}
-              value={rawText}
-            /> */}
             <ReactQuill
               onChange={handleBody}
               onKeyDown={handlekeypress}
@@ -528,74 +460,27 @@ const TextEditor = () => {
               modules={modules}
               formats={formats}
             ></ReactQuill>
-            {/* <RichTextEditor value={newcontent} onChange={handleTxextEEditor} /> */}
-            {/* <Editor
-              toolbarClassName="toolbar-class"
-              wrapperClassName="wrapper-class"
-              editorClassName="editor-class"
-              defaultEditorState={content}
-              onChange={handleChange}
-              toolbar={{
-                options: ["inline", "list", "blockType"],
-                inline: {
-                  inDropdown: false,
-                  options: ["bold", "italic", "underline"],
-                },
-                list: {
-                  inDropdown: false,
-                  options: ["unordered", "ordered"],
-                },
-                link: { inDropdown: false },
-                blockType: {
-                  inDropdown: false,
-                  options: ["H1", "H2"],
-                },
-              }}
-            /> */}
           </div>
-          {/* <div className="accordian_footer_btns d-flex justify-content-end">
-            <button
-              onClick={() => {
-                check();
-              }}
-            >
-              Grammar Check
-            </button>
-            <button
-              onClick={() => {
-                handlesubmit("Pending");
-              }}
-              disabled={!text || !title}
-            >
-              Save Document
-            </button>
-            <button
-              onClick={() => {
-                handlesubmit("Completed");
-              }}
-              disabled={!text || !title}
-            >
-              Submit Document
-            </button>
-          </div> */}
         </div>
-        <AccordianMenu
-          matches={matches}
-          correctText={correctText}
-          text={text}
-          title={title}
-          check={check}
-          handlesubmit={handlesubmit}
-          handleHover={handleHover}
-          setHover={setHover}
-          setRawText={setRawText}
-          save={save}
-          checkPlagarism={checkPlagarism}
-          plagStatus={plagStatus}
-          plagData={plagData}
-          addIgnoredWord={addIgnoredWord}
-          addIgnoredRule={addIgnoredRule}
-        />
+        <div className="accordian_menu">
+          <AccordianMenu
+            matches={matches}
+            correctText={correctText}
+            text={text}
+            title={title}
+            check={check}
+            handlesubmit={handlesubmit}
+            handleHover={handleHover}
+            setHover={setHover}
+            setRawText={setRawText}
+            save={save}
+            checkPlagarism={checkPlagarism}
+            plagStatus={plagStatus}
+            plagData={plagData}
+            addIgnoredWord={addIgnoredWord}
+            addIgnoredRule={addIgnoredRule}
+          />
+        </div>
       </div>
     </UserAuthProvider>
   );

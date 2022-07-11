@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { UserAuthProvider } from "../context/UserContext";
-
+import React from "react";
 function SimpleEditor() {
   const [text, setText] = useState("thes is a text with som errorrs");
   const [matches, setMatches] = useState([]);

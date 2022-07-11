@@ -10,7 +10,7 @@ import TextEditor from "./components/TextEditor/TextEditor";
 import Homepage from "./components/Homepage/Homepage";
 import Monitor from "./components/Dashboard/Monitor/Monitor";
 import Pricing from "./components/Pricing/Pricing";
-
+import React from "react";
 function App() {
   return (
     <AuthProvider>
@@ -21,8 +21,8 @@ function App() {
         <Route exact path="/logout" element={<Logout />} />
         <Route exact path="/addDetails" element={<AddDetials />} />
         <Route exact path="/pricing" element={<Pricing />} />
-        <Route exact path="/grammarly-editor" element={<GrammarlyEditor />} />
-        <Route exact path="/simple-editor" element={<SimpleEditor />} />
+        {/* <Route exact path="/grammarly-editor" element={<GrammarlyEditor />} /> */}
+        {/* <Route exact path="/simple-editor" element={<SimpleEditor />} /> */}
         <Route exact path="/texteditor" element={<TextEditor />} />
         <Route exact path="/texteditor/:id" element={<TextEditor />} />
         {/* Dashboard Routes */}
