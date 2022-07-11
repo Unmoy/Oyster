@@ -62,7 +62,7 @@
 
 .login_btn button {
   border: none;
-  background: #107ed9;
+  background: #c4c7fb;
   border-radius: 5px;
   font-size: 18px;
   line-height: 29px;
@@ -75,7 +75,7 @@
 
 .login_btn button:disabled {
   border: none;
-  background: #85b6ff;
+  background: #c4c7fb;
   border-radius: 5px;
   font-size: 18px;
   line-height: 29px;

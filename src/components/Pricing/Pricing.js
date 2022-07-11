@@ -84,7 +84,7 @@ const Pricing = () => {
                         </div>
                         <button className="pricing_btn">Get Started</button>
                       </div>
-                      <div className="pricing_card first">
+                      <div className="pricing_card">
                         <h3>Half-yearly plan</h3>
                         <ul>
                           <li>Grammer Suggestion</li>
@@ -121,7 +121,6 @@ const Pricing = () => {
                     <div className="pricing_cards_wrapper">
                       <div className="pricing_card">
                         <div>
-                          {" "}
                           <h3>Yearly Plan</h3>
                           <ul>
                             <li>Grammer Suggestion</li>
@@ -129,7 +128,6 @@ const Pricing = () => {
                           </ul>
                         </div>
                         <div>
-                          {" "}
                           <div className="pricing_price">
                             Starting at <br />
                             <svg
@@ -153,33 +151,31 @@ const Pricing = () => {
                       </div>
                       <div className="pricing_card">
                         <div>
-                          <h3>Half-yearly plan</h3>
-                          <ul>
+                          <h3>Half-Yearly Plan</h3>
+                          <ul className="half_yearly_card">
                             <li>Grammer Suggestion</li>
                             <li>Plagrism Report</li>
                           </ul>
                         </div>
-                        <div>
-                          <div className="pricing_price">
-                            Starting at <br />
-                            <svg
-                              width="20"
-                              height="25"
-                              viewBox="0 0 21 32"
-                              fill="none"
-                              className="price_svg"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M13.405 7.11111C12.425 5.01333 10.325 3.55556 7.875 3.55556H0V0H21V3.55556H15.295C16.135 4.58667 16.765 5.79556 17.1325 7.11111H21V10.6667H17.465C17.0275 15.6444 12.8975 19.5556 7.875 19.5556H6.5975L18.375 32H13.5275L1.75 19.5556V16H7.875C10.955 16 13.51 13.6889 13.93 10.6667H0V7.11111H13.405Z"
-                                fill="#333342"
-                              />
-                            </svg>
-                            <span className="price_tag"> 3999/-</span> <br />{" "}
-                            for 12 months
-                          </div>
-                          <button className="pricing_btn">Get Started</button>
+                        <div className="pricing_price">
+                          Starting at <br />
+                          <svg
+                            width="20"
+                            height="25"
+                            viewBox="0 0 21 32"
+                            fill="none"
+                            className="price_svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M13.405 7.11111C12.425 5.01333 10.325 3.55556 7.875 3.55556H0V0H21V3.55556H15.295C16.135 4.58667 16.765 5.79556 17.1325 7.11111H21V10.6667H17.465C17.0275 15.6444 12.8975 19.5556 7.875 19.5556H6.5975L18.375 32H13.5275L1.75 19.5556V16H7.875C10.955 16 13.51 13.6889 13.93 10.6667H0V7.11111H13.405Z"
+                              fill="#333342"
+                            />
+                          </svg>
+                          <span className="price_tag"> 3999/-</span> <br /> for
+                          12 months
                         </div>
+                        <button className="pricing_btn">Get Started</button>
                       </div>
                     </div>
                   </div>

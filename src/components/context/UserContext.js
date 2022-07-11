@@ -43,6 +43,12 @@ export const UserAuthProvider = ({ children }) => {
     }
     check();
   }, [currentUser, token]);
-
-  return <UserContext.Provider>{!loading && children}</UserContext.Provider>;
+  const value = {
+    currentUser,
+  };
+  return (
+    <UserContext.Provider value={value}>
+      {!loading && children}
+    </UserContext.Provider>
+  );
 };

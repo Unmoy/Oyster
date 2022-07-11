@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import StoryCard from "../StoryCard/StoryCard";
 import "./Monitor.css";
+import { useOutletContext } from "react-router-dom";
 const Monitor = () => {
   const [toggleState, setToggleState] = useState(1);
   const [documents, setDocuments] = useState([]);
+  const [filterdocuments, setFilterDocuments] = useState([]);
+  const [searchText] = useOutletContext();
+  console.log(searchText);
+  // console.log(searchText.trim());
   const toggleTab = (index) => {
     setToggleState(index);
   };
@@ -16,6 +21,7 @@ const Monitor = () => {
       .then((response) => response.json())
       .then((result) => {
         setDocuments(result);
+        setFilterDocuments(result);
         console.log(result);
       })
       .catch((error) => {
@@ -25,6 +31,26 @@ const Monitor = () => {
   useEffect(() => {
     getDocuments();
   }, []);
+  const StoryFilter = () => {
+    const filteredData = filterdocuments.filter((val) => {
+      if (
+        val.title
+          .trim()
+          .toLowerCase()
+          .includes(searchText.trim().toLowerCase()) ||
+        val.content.toLowerCase().includes(searchText.trim().toLowerCase())
+      ) {
+        console.log(val);
+        return val;
+      } else {
+        setDocuments(documents);
+      }
+    });
+    setDocuments(filteredData);
+  };
+  useEffect(() => {
+    StoryFilter();
+  }, [searchText]);
   return (
     <div className="story_tab_container">
       <div className="bloc-tabs">
@@ -51,13 +77,13 @@ const Monitor = () => {
         <div className="story_content  active-story_content">
           <div className="d-flex flex-wrap">
             {documents.length > 0 &&
-              documents.map((document) => {
+              documents.map((document, index) => {
                 if (
                   toggleState === 1 ||
                   (toggleState === 2 && document.status === "Pending") ||
                   (toggleState === 3 && document.status === "Completed")
                 ) {
-                  return <StoryCard document={document} />;
+                  return <StoryCard key={index} document={document} />;
                 }
               })}
           </div>

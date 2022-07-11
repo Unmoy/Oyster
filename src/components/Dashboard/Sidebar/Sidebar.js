@@ -80,26 +80,26 @@ const Sidebar = () => {
               <path
                 d="M8 3H3V10H8V3Z"
                 stroke="#AAAFFF"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M17 3H11V7H17V3Z"
                 stroke="#AAAFFF"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M17 10H11V17H17V10Z"
                 stroke="#AAAFFF"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M8 13H3V17H8V13Z"
                 stroke="#AAAFFF"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             <span className="menu--text">Dashboard</span>

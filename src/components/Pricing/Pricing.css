@@ -77,9 +77,9 @@
 }
 .bloc-tabs {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   justify-content: flex-start;
-  /* background: blueviolet; */
+  background: #f5f6ff;
   max-width: 500px;
   border-top-right-radius: 10px;
 }
@@ -114,7 +114,7 @@
 .clinic_content {
   background: #ffffff;
   border-radius: 8px;
-  padding: 20px;
+  /* padding: 20px; */
   width: 100%;
   display: none;
 }
@@ -130,8 +130,24 @@
 .standard {
   margin: 0 30px;
 }
+.standard h5 {
+  font-family: "Bitter";
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: -0.015em;
+  color: #333342;
+}
+.basic h5 {
+  font-family: "Bitter";
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: -0.015em;
+  color: #333342;
+}
 .basic {
-  margin: 0 30px;
+  /* margin: 0 30px; */
 }
 .pricing_cards_wrapper {
   display: flex;
@@ -147,10 +163,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.pricing_card.first {
-  /* border-top-right-radius: 0px !important; */
-  /* border-bottom: 16px; */
-}
+
 .pricing_card h3 {
   font-family: "Bitter";
   font-weight: 500;
@@ -173,6 +186,9 @@
   color: rgba(0, 0, 0, 0.8);
   list-style-type: square;
   padding: 10px 0;
+}
+.half_yearly_card li {
+  margin: 0 30px;
 }
 /* .pricing_card ul li::marker {
   color: #c4c7fb;

@@ -21,7 +21,7 @@ const AccordianMenu = ({
 }) => {
   const [open, setOpen] = useState(true);
   const [grammaropen, setGrammarOpen] = useState(true);
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = useState(true);
   function handleClick() {
     setLoading(true);
   }
