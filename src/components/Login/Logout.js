@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import React from "react";
 const Logout = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const Logout = () => {
     localStorage.setItem("token", "");
     localStorage.setItem("id", "");
   }, [currentUser]);
-  return <>Logout</>;
+  return <div>Logout</div>;
 };
 
 export default Logout;

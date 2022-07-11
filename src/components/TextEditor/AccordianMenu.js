@@ -45,8 +45,12 @@ const AccordianMenu = ({
               className="accordian_header"
             >
               <motion.h2 className="accordian_title">
-                All Suggestions{" "}
-                <p className="accordian_counter">{matches.length}</p>
+                Grammer Suggestions{" "}
+                {matches.length ? (
+                  <p className="accordian_counter">{matches.length}</p>
+                ) : (
+                  ""
+                )}
               </motion.h2>
               <img src={open ? downArrow : upArrow} alt="" />
             </motion.div>
@@ -69,7 +73,7 @@ const AccordianMenu = ({
           </li>
         </ul>
       </motion.div>
-      <motion.div className="accordian_container">
+      {/* <motion.div className="accordian_container">
         <ul className="accordian_ul">
           <li>
             <motion.div
@@ -132,7 +136,7 @@ const AccordianMenu = ({
             </div>
           </li>
         </ul>
-      </motion.div>
+      </motion.div> */}
       <div className="accordian_container">
         <div className="plagarism_card">
           <h1>Plagarism</h1>

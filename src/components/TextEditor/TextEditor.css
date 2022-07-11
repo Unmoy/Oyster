@@ -7,8 +7,6 @@
 }
 .accordian_menu {
   width: 350px;
-  /* position: relative; */
-  /* background-color: cadetblue; */
   max-height: 100vh;
   padding: 2em 0;
 }
@@ -18,7 +16,8 @@
   left: 4px;
   width: 50px;
 }
-
+.dashboard_brand_link {
+}
 .editor:before {
   position: absolute;
   content: "";
@@ -37,7 +36,6 @@
   height: 50vh;
   margin: auto;
   position: relative;
-  /* background-color: aquamarine !important; */
 }
 
 .document_title {
@@ -56,10 +54,14 @@
 .document_title:focus {
   outline: none;
 }
+.text_editor_header {
+  /* position: relative; */
+}
 .document_btns {
   position: absolute;
-  right: 40%;
-  top: 7%;
+  right: 37%;
+  top: 70px;
+  /* background-color: red; */
 }
 .document_btns button {
   border: none;
@@ -83,118 +85,28 @@
 .save_doc_icon path {
   fill: #b3b4c5;
 }
-.document_copy {
-}
 .save_text {
   position: absolute;
-  top: -4em;
-  right: 12em;
+  bottom: -6em;
+  right: 11em;
   color: #b3b4c5;
   font-size: 13px;
   font-family: "Bitter";
 }
-.text_editor_header {
-  /* display: flex; */
-  /* width: 800px !important; */
-  /* position: relative; */
-}
-/* .tox-tinymce {
-  margin: auto;
-  max-width: 800px;
-}
 
-.tox .tox-editor-container {
-  flex-direction: row !important;
-}
-
-.tox .tox-toolbar__group {
-  display: block !important;
-}
-
-.tox .tox-toolbar,
-.tox .tox-toolbar__overflow,
-.tox .tox-toolbar__primary {
-  background: none !important;
-}
-
-.tox .tox-toolbar-overlord {
-  background: none !important;
-}
-
-.tox .tox-statusbar {
-  display: none !important;
-}
-
-.tox-editor-header {
-  position: absolute !important;
-  left: -22% !important;
-  top: 20%;
-  background: none !important;
-  box-shadow: none !important;
-}
-
-.tox-tinymce {
-  border: 2px solid #eee;
-  overflow: visible !important;
-}
-.toolbar-class {
-
-  margin: auto;
-  flex-direction: column !important;
-  position: absolute;
-  left: 0%;
-  top: 40%;
-  transform: translateY(-50%, -50%);
-}
-.editor-class {
-  width: 50em !important;
-  margin: auto;
-  
-  position: absolute;
-  left: 10%;
-  top: 20%;
-  height: 300px !important;
-  box-shadow: 0 12px 48px rgb(109 117 141 / 20%);
-}
-.wrapper-class {
-  display: flex;
-}
-.rdw-inline-wrapper {
-  flex-direction: column;
-}
-.rdw-list-wrapper {
-  flex-direction: column;
-}
-.rdw-editor-main {
-  overflow: hidden !important;
-} */
 .quill {
-  /* min-width: 600px; */
   display: flex;
-  /* height: 50vh; */
-  /* margin: auto; */
-  /* background-color: #eee !important; */
   position: relative !important;
-}
-
-.text_editor_quill {
-  /* display: flex; */
 }
 .ql-formats {
   display: flex !important;
   flex-direction: column !important;
   gap: 10px;
   border-bottom: 1px solid #000;
-  /* position: absolute !important; */
-  /* left: 0 !important; */
-  /* top: 50% !important; */
 }
 .ql-toolbar.ql-snow {
-  /* display: flex !important;
-  flex-direction: column !important; */
-  /* background-color: red !important; */
   position: absolute !important;
-  left: -2% !important;
+  left: -5% !important;
   top: 50px !important;
   padding-left: 10px !important;
   border: none !important;
@@ -202,11 +114,11 @@
 
 .ql-container {
   height: 33em !important;
-  /* background-color: red; */
   position: absolute !important;
   left: 15%;
   top: -2em !important;
   width: 60em !important;
-  box-shadow: 0 12px 48px rgb(109 117 141 / 20%) !important;
+  /* box-shadow: 0 12px 48px rgb(109 117 141 / 20%) !important; */
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px !important;
   border: none !important;
 }

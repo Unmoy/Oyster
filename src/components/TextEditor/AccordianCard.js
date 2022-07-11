@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-// import { motion } from "framer-motion/dist/es/index";
 import image from "../../assets/images/circle.png";
 const AccordianCard = ({
   match,
@@ -14,17 +13,11 @@ const AccordianCard = ({
   correctText,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  //<h2>{match.shortMessage}</h2>
   const toggleShow = () => {
     setIsOpen(!isOpen);
     onToggle();
   };
   const isActive = () => (multiple ? isOpen : active);
-  console.log("match", match);
-  console.log(
-    "text",
-    text?.substring(match.offset, match.offset + match.length)
-  );
   return (
     <div>
       <motion.div

@@ -7,7 +7,7 @@ function SimpleEditor() {
   const correctText = (match, index) => {
     setText(
       text.replace(
-        text.substr(match.context.offset, match.context.length),
+        text.substring(match.context.offset, match.context.length),
         match.replacements[0].value
       )
     );
@@ -63,7 +63,7 @@ function SimpleEditor() {
               <div key={index} className="border border-dark p-1 m-1">
                 <span className="text-danger">
                   <s>
-                    {text.substr(match.context.offset, match.context.length)}
+                    {text.substring(match.context.offset, match.context.length)}
                   </s>
                 </span>
                 <span className="text-success">

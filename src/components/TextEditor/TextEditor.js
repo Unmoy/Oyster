@@ -7,7 +7,7 @@ import downloadcircle from "../../assets/images/arrow-down-circle.png";
 import AccordianMenu from "./AccordianMenu";
 import { UserAuthProvider } from "../context/UserContext";
 import logo from "../../assets/images/O.png";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const TextEditor = () => {
   const navigate = useNavigate();
@@ -392,7 +392,9 @@ const TextEditor = () => {
   return (
     <UserAuthProvider>
       <div className="editor">
-        <img src={logo} alt="" className="brandlogo" />
+        <Link to="/dashboard" className="dashboard_brand_link">
+          <img src={logo} alt="" className="brandlogo" />
+        </Link>
         <div>
           <div className="text_editor_header">
             <input
@@ -420,6 +422,15 @@ const TextEditor = () => {
             </div>
           </div>
           <div className="editor_container">
+            <ReactQuill
+              onChange={handleBody}
+              onKeyDown={handlekeypress}
+              value={rawText}
+              preserveWhitespace={true}
+              className="text_editor_quill"
+              modules={modules}
+              formats={formats}
+            />
             {text && (
               <span className="save_text">
                 {save ? (
@@ -451,15 +462,6 @@ const TextEditor = () => {
                 )}
               </span>
             )}
-            <ReactQuill
-              onChange={handleBody}
-              onKeyDown={handlekeypress}
-              value={rawText}
-              preserveWhitespace={true}
-              className="text_editor_quill"
-              modules={modules}
-              formats={formats}
-            ></ReactQuill>
           </div>
         </div>
         <div className="accordian_menu">
