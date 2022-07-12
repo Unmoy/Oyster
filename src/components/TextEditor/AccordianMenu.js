@@ -19,6 +19,8 @@ const AccordianMenu = ({
   plagData,
   addIgnoredWord,
   addIgnoredRule,
+  setHover,resetHover,
+  handleHover,
   multiple = false,
 }) => {
   const [open, setOpen] = useState(true);
@@ -61,6 +63,7 @@ const AccordianMenu = ({
               {matches.map((match, index) => (
                 <AccordianCard
                   match={match}
+                  resetHover={resetHover}
                   key={index}
                   text={text}
                   index={index}
@@ -70,6 +73,8 @@ const AccordianMenu = ({
                   active={active === index}
                   multiple={multiple}
                   onToggle={(e) => setActive((a) => (a === index ? "" : index))}
+                  handleHover={handleHover}
+                  setHover={setHover}
                 />
               ))}
             </div>

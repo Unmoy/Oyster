@@ -57,14 +57,19 @@ const TextEditor = () => {
     }
   }, [save]);
   const handleHover = (match, index) => {
-    // console.log("done");
-    // const newText =
-    //   text.substring(0, match.offset) +
-    //   '<span style="background-color:red; color:white">' +
-    //   text.substring(match.offset, match.offset + match.length) +
-    //   "</span>" +
-    //   text.substring(match.offset + match.length, text.length);
-    // setRawText(newText);
+    console.log("done", index);
+    const newText =
+      text.substring(0, match.offset) +
+      // '<b style="background-color:red; color:white">' +
+      "<strong>" +
+      text.substring(match.offset, match.offset + match.length) +
+      "</strong>" +
+      // "</b>" +
+      text.substring(match.offset + match.length, text.length);
+    setRawText(newText);
+  };
+  const resetHover = () => {
+    setRawText(text);
   };
 
   const decorateText = (matches) => {
@@ -362,14 +367,16 @@ const TextEditor = () => {
   }, [id]);
 
   const handleBody = (value) => {
-    const newText = value.replace(/<[^>]+>/g, "");
+    if (!hover) {
+      const newText = value.replace(/<[^>]+>/g, "");
 
-    setText(newText);
-    setRawText(value);
-    setSave(false);
-    setMatches([]);
+      setText(newText);
+      setRawText(value);
+      setSave(false);
+      setMatches([]);
 
-    console.log("TextUpdated", newText);
+      console.log("TextUpdated", newText, value);
+    }
   };
 
   const modules = {
@@ -475,6 +482,7 @@ const TextEditor = () => {
             handleHover={handleHover}
             setHover={setHover}
             setRawText={setRawText}
+            resetHover={resetHover}
             save={save}
             checkPlagarism={checkPlagarism}
             plagStatus={plagStatus}

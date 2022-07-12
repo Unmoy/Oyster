@@ -11,6 +11,9 @@ const AccordianCard = ({
   onToggle,
   active,
   correctText,
+  setHover,
+  handleHover,
+  resetHover,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const toggleShow = () => {
@@ -19,7 +22,16 @@ const AccordianCard = ({
   };
   // const isActive = () => (multiple ? isOpen : active);
   return (
-    <div>
+    <div
+      onMouseEnter={() => {
+        setHover(true);
+        handleHover(match, index);
+      }}
+      onMouseLeave={() => {
+        setHover(false);
+        resetHover();
+      }}
+    >
       <motion.div
         className="accordian_card--parent"
         onClick={toggleShow}
