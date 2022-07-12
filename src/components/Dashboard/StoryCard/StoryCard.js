@@ -9,7 +9,7 @@ const StoryCard = ({ document }) => {
     // console.log(date);
   }, [document]);
   // First 2 words in the title
-  const title = document?.title.split(" ").slice(0, 2).join(" ");
+  const title = document?.title?.split(" ").slice(0, 2).join(" ");
   console.log(title);
   return (
     <div
@@ -24,7 +24,7 @@ const StoryCard = ({ document }) => {
             ? `${document?.title?.length > 15 ? `${title}...` : title}`
             : "Untitled"}
         </h1>
-        <p>{document?.content.substring(0, 145)}...</p>
+        <p>{document?.content?.substring(0, 145)}...</p>
       </div>
       <div className="story_card_footer">
         <h4>Recent: {date}</h4>

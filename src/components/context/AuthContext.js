@@ -28,6 +28,30 @@ export const AuthProvider = ({ children }) => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
+  const createNewDocument = () => {
+    const token = localStorage.getItem("token");
+    fetch("https://oysterbackend.herokuapp.com/document", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
+          navigate(`/texteditor/${data.id}`);
+        } else {
+          console.log(data.message);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
+
   async function signInWithGoogle() {
     try {
       const result = await signInWithPopup(auth, provider);
@@ -66,6 +90,7 @@ export const AuthProvider = ({ children }) => {
                 setCurrentUser({ uid, name, email, phone, id });
                 console.log(result);
                 // navigate("/dashboard");
+                createNewDocument();
               } else {
                 const uid = user.uid;
                 const name = user.displayName;
@@ -127,7 +152,8 @@ export const AuthProvider = ({ children }) => {
                 const { uid, name, email, phone } = data.user;
                 const { id } = data;
                 setCurrentUser({ uid, name, email, phone, id });
-                navigate("/dashboard");
+                // navigate("/dashboard");
+                createNewDocument();
               } else {
                 const uid = user.uid;
                 const phone = user.phoneNumber;
