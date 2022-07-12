@@ -51,7 +51,7 @@ const TextEditor = () => {
           saveContent(title, text);
           check(text);
         }
-      }, 5000);
+      }, 1000);
 
       return () => clearInterval(interval);
     }

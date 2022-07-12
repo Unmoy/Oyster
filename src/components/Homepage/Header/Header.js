@@ -45,9 +45,10 @@ const Header = () => {
               </p>
             </div>
           </div>
-          <div className=" image col-md-12 col-lg-6">
-            {/* <img src={headergif} alt="" /> */}
-            <HeaderGIF />
+          <div className="col-md-12 col-lg-6">
+            <div className="image">
+              <HeaderGIF />
+            </div>
           </div>
         </div>
       </section>
