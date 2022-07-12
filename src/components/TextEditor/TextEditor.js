@@ -103,7 +103,7 @@ const TextEditor = () => {
     // editedText = editedText + editText;
     // // console.log(editText, editedText, index);
     // setRawText(editedText);
-    // setContent(editedText);
+    // // setContent(editedText);
   };
 
   const correctText = (match, index) => {

@@ -5,7 +5,7 @@
   justify-content: center;
 }
 .lottie-svg-class {
-  cursor: auto !important;
+  /* cursor: auto !important; */
 }
 
 .home .content {
@@ -15,7 +15,6 @@
   /* background-color: cadetblue; */
   /* max-width: 700px; */
   /* max-width: 35em; */
-
 }
 .home .content h2 {
   margin-bottom: 50px;
@@ -62,12 +61,22 @@
 .lottie_animation {
   /* margin-right: 2000px !important; */
   /* position: relative; */
+  /* background-color: red; */
+  /* overflow: hidden; */
+  /* position: relative; */
+  width: 500px;
+  overflow: hidden;
+  position: relative;
 }
 .lottie_animation svg {
   /* min-width: 740px !important; */
   /* position: relative; */
   /* top: 0; */
   /* left: 40%; */
+  width: 178% !important;
+  position: relative;
+  left: -40% !important;
+  top: 0;
 }
 @media only screen and (min-width: 2000px) {
   .home .content {

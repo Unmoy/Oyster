@@ -12,12 +12,12 @@ const AccordianCard = ({
   active,
   correctText,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const toggleShow = () => {
     setIsOpen(!isOpen);
-    onToggle();
+    // onToggle();
   };
-  const isActive = () => (multiple ? isOpen : active);
+  // const isActive = () => (multiple ? isOpen : active);
   return (
     <div>
       <motion.div
@@ -36,7 +36,7 @@ const AccordianCard = ({
           </motion.h2>
           <motion.img layout="position" src={image} alt="error" />
         </div>
-        {isActive() && (
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -51,7 +51,21 @@ const AccordianCard = ({
                   correctText(match, index);
                 }}
               >
-                Do
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20px"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  className="correct_svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
               </span>
               <span
                 style={{ cursor: "pointer" }}
@@ -64,7 +78,21 @@ const AccordianCard = ({
                   }
                 }}
               >
-                Ignore
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20px"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  className="correct_svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
               </span>
             </div>
           </motion.div>

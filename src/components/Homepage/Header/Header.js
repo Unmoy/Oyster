@@ -6,8 +6,32 @@ import HeaderGIF from "./HeaderGIF";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  const createNewDocument = () => {
+    const token = localStorage.getItem("token");
+    fetch("https://oysterbackend.herokuapp.com/document", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
+          navigate(`/texteditor/${data.id}`);
+        } else {
+          console.log(data.message);
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  };
   const handleChange = () => {
-    navigate("/texteditor");
+    createNewDocument();
   };
   return (
     <div>
@@ -46,9 +70,7 @@ const Header = () => {
             </div>
           </div>
           <div className="col-md-12 col-lg-6">
-            <div className="image">
-              <HeaderGIF />
-            </div>
+            <HeaderGIF />
           </div>
         </div>
       </section>

@@ -1,5 +1,4 @@
 .accordian_container {
-  padding: 20px 20px 0 20px;
   background: #ffffff;
   box-shadow: -5px 5px 40px 2px rgba(208, 209, 255, 0.45);
   border-radius: 14px;
@@ -44,6 +43,31 @@
   opacity: 0;
 }
 
+.scroll_container {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 47vh;
+}
+.scroll_container::-webkit-scrollbar-thumb {
+  background: transparent !important;
+}
+.scroll_container::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.scroll_container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll_container::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 50px;
+}
+
+.scroll_container::-webkit-scrollbar-thumb:hover {
+  background: #64b5f6;
+}
 .accordian_ul li input[type="checkbox"]:checked ~ .accordian_card_container {
   display: none;
   transform: translateX(-50%);
@@ -120,6 +144,9 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  /* background-color: cadetblue; */
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .accordian_card--child {
@@ -140,10 +167,10 @@
 .accordian_card--child p {
   font-weight: 400;
   font-size: 14px;
-  line-height: 35px;
+  line-height: 25px;
   letter-spacing: -0.015em;
   color: #000000;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .accordian_card h6 {
@@ -177,12 +204,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 20px;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  /* background-color: #64b5f6; */
 }
 
 .plagarism_card {
   min-width: 300px;
   padding-bottom: 10px;
+  padding: 10px 20px;
 }
 
 .plagarism_card h1 {
@@ -190,7 +223,7 @@
   font-size: 18px;
   letter-spacing: -0.015em;
   color: #6e6e70;
-  padding-bottom: 10px;
+  padding: 10px 0;
   border-bottom: 1px solid rgba(196, 196, 196, 0.65);
 }
 
@@ -204,6 +237,7 @@
   color: #ffffff;
   margin-top: 10px;
   width: 150px;
+  text-transform: capitalize;
 }
 
 .plagarism_card button:disabled {
@@ -217,7 +251,21 @@
   margin-top: 10px;
   width: 150px;
 }
-
+.plagarism_card button:hover {
+  background: #c4c7fb !important;
+  box-shadow: none !important;
+}
+.plagarism_card_child {
+  padding: 0 10px;
+}
+.plagarism_card_child h2 {
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 0;
+  margin-top: 10px;
+  letter-spacing: 0.02em;
+  color: #000000;
+}
 .accordian_card--child h2 {
   font-size: 15px;
 }
@@ -248,29 +296,18 @@
   font-size: 14px;
   min-width: 120px;
 }
-.accordian_footer_btns {
-  margin-right: 8em;
-}
-.accordian_footer_btns button {
-  background: #c4c7fb;
-  border: none;
-  margin: 0 10px;
-  width: 10em;
-  padding: 5px 0;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 15px;
-}
+
 .correction_cta span {
-  display: inline-block;
-  margin: 0 10px;
-  background: #0094ff;
+  background-color: #c4c7fb;
+  margin: 0 5px;
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 12px;
   text-align: center;
-  color: #fff;
   font-weight: 400;
+}
+.correct_svg path {
+  fill: transparent;
 }
 .css-ozdsf4-MuiLinearProgress-root {
   height: 12px !important;

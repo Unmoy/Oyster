@@ -9,6 +9,8 @@
   width: 350px;
   max-height: 100vh;
   padding: 2em 0;
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
 }
 .brandlogo {
   position: absolute;
@@ -42,6 +44,7 @@
   position: absolute;
   top: 10%;
   left: 13%;
+  font-weight: 600;
 }
 .document_title::placeholder {
   font-weight: 600;
@@ -58,8 +61,8 @@
 }
 .document_btns {
   position: absolute;
-  right: 37%;
-  top: 70px;
+  right: 34.5%;
+  top: 71px;
   /* background-color: red; */
 }
 .document_btns button {

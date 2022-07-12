@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import AccordianCard from "./AccordianCard";
 import LinearProgress from "@mui/material/LinearProgress";
 // import { LoadingButton } from "@mui/lab";
+
+import LoadingButton from "@mui/lab/LoadingButton";
 const AccordianMenu = ({
   matches,
   correctText,
@@ -24,12 +26,13 @@ const AccordianMenu = ({
   const [loading, setLoading] = useState(true);
   function handleClick() {
     setLoading(true);
+    checkPlagarism(text);
   }
   const [active, setActive] = useState(0);
   const [grammarActive, setGrammarActive] = useState(0);
   return (
-    <div className="accordian_menu">
-      <motion.div layout className="accordian_container ">
+    <div className="">
+      <motion.div layout className="accordian_container scroll_container">
         <ul className="accordian_ul">
           <li>
             {/* <input
@@ -139,7 +142,7 @@ const AccordianMenu = ({
       </motion.div> */}
       <div className="accordian_container">
         <div className="plagarism_card">
-          <h1>Plagarism</h1>
+          <h1>Plagarism </h1>
           {/* <LinearProgress variant="query" height={100} /> */}
           <div className="d-flex flex-column justify-content-end">
             {plagData && (
@@ -154,38 +157,21 @@ const AccordianMenu = ({
                     <p>Plagarism %: {plagData.score.aggregatedScore}%</p>
                   </div>
                 ) : (
-                  plagStatus === "pending" && (
-                    <div className="">
-                      <LinearProgress variant="query" />
-                      {/* <div className="accordian_sleleton">
-                        <Skeleton width={130} />
-                        <Skeleton width={130} />
-                        <Skeleton width={130} />
-                        <Skeleton width={130} />
-                      </div>
-                      <div className="accordian_sleleton_div">
-                        <Skeleton height={60} />
-                      </div> */}
-                    </div>
-                  )
+                  " "
                 )}
 
                 {plagData.internet &&
                   plagData.internet.map((plag, index) => {
                     return (
                       <div
-                        className="accordian_card--parent"
+                        className="plagarism_card_parent"
                         key={index}
                         // onClick={() => {
                         //   navigate(plag.url);
                         // }}
                       >
-                        <div className="accordian_card">
-                          <h2>{plag.title}</h2>
-                          <img src={image} alt="error" />
-                        </div>
-                        <div className="accordian_card--child">
-                          <h2>{plag.introduction}</h2>
+                        <div className="plagarism_card_child">
+                          <h2>{plag.introduction.substring(0, 30)}...</h2>
                           <a
                             href={plag.url}
                             target="_blank"
@@ -201,22 +187,16 @@ const AccordianMenu = ({
               </div>
             )}
             <div className="d-flex justify-content-end">
-              {/* <LoadingButton
+              <LoadingButton
                 size="small"
                 onClick={handleClick}
                 // endIcon={<SendIcon />}
-                loading={loading}
+                loading={plagStatus === "pending"}
                 loadingPosition="end"
+                endIcon={<></>}
                 variant="contained"
-              >
-                Send
-              </LoadingButton> */}
-              <button
-                className="plagarism_check_btn"
-                onClick={() => {
-                  checkPlagarism(text);
-                }}
                 disabled={plagStatus === "pending"}
+                // className="plagarism_check_btn"
               >
                 {plagStatus === "none"
                   ? "Plagrism Check"
@@ -225,7 +205,7 @@ const AccordianMenu = ({
                   : plagStatus === "completed"
                   ? "Check Again"
                   : ""}
-              </button>
+              </LoadingButton>
             </div>
           </div>
         </div>
