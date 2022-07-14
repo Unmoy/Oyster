@@ -58,21 +58,15 @@
   text-decoration: none;
   color: #fff;
 }
+.get_started_btn:active {
+  transform: scale(0.99);
+}
 .lottie_animation {
-  /* margin-right: 2000px !important; */
-  /* position: relative; */
-  /* background-color: red; */
-  /* overflow: hidden; */
-  /* position: relative; */
   width: 500px;
   overflow: hidden;
   position: relative;
 }
 .lottie_animation svg {
-  /* min-width: 740px !important; */
-  /* position: relative; */
-  /* top: 0; */
-  /* left: 40%; */
   width: 178% !important;
   position: relative;
   left: -40% !important;

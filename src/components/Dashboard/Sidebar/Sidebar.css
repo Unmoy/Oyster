@@ -74,11 +74,11 @@
 
 .menu--text {
   font-weight: 400;
-  font-size: 17px;
+  font-size: 1em;
   line-height: 27px;
 }
 .menu--text_3 {
-  font-size: 15px;
+  font-size: 0.96em;
 }
 .sidebar_menu_item:hover {
   color: #aaafff;

@@ -25,7 +25,7 @@ const TextEditor = () => {
   const [ignoredCategories, setIgnoredCategories] = useState([]);
   // const [counter, setCounter] = useState(0);
   // console.log("Start", rawText);
-
+  const [loading, setLoading] = useState(false);
   const addIgnoredRule = (match) => {
     setIgnoredRules([...ignoredRules, match.rule.id]);
     check();
@@ -57,13 +57,13 @@ const TextEditor = () => {
     }
   }, [save]);
   const handleHover = (match, index) => {
-    console.log("done", index);
+    // console.log("done", index);
     const newText =
       text.substring(0, match.offset) +
       // '<b style="background-color:red; color:white">' +
-      "<strong>" +
+      `<span style="background-color: rgb(250, 204, 204);">` +
       text.substring(match.offset, match.offset + match.length) +
-      "</strong>" +
+      "</span>" +
       // "</b>" +
       text.substring(match.offset + match.length, text.length);
     setRawText(newText);
@@ -143,18 +143,19 @@ const TextEditor = () => {
       .then((data) => {
         // console.log(data);
         if (data.status === "pending") {
-          console.log(
-            "pending",
-            data,
-            data.result,
-            data.result.internet.length
-          );
+          // console.log(
+          //   "pending",
+          //   data,
+          //   data.result,
+          //   data.result.internet.length
+          // );
           setPlagStatus("pending");
           setPlagData(data.result);
           checkWebHook(scanID);
         } else if (data.status === "completed") {
+          setLoading(false);
           setPlagStatus("completed");
-          console.log("completed", data);
+          // console.log("completed", data);
           setPlagData(data.scanResult.results);
         } else {
           console.log(data.message);
@@ -183,7 +184,7 @@ const TextEditor = () => {
         console.log(data);
         if (data.message === "SCAN_CREATED_SUCCESSFULLY") {
           checkWebHook(data.scanId);
-          console.log(data);
+          // console.log(data);
         } else {
           console.log(data.message);
         }
@@ -214,7 +215,7 @@ const TextEditor = () => {
       .then((response) => response.json())
       .then((response) => {
         filterMatches(response.matches);
-        console.log(response.matches);
+        // console.log(response.matches);
       })
       .catch((err) => console.error(err));
   };
@@ -261,10 +262,10 @@ const TextEditor = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.message === "DOCUMENT_UPDATED_SUCCESSFULLY") {
           setSave(true);
-          console.log(data.message);
+          // console.log(data.message);
         } else {
           console.log(data.message);
         }
@@ -347,7 +348,7 @@ const TextEditor = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data) {
             // console.log(data);
             setText(data.content);
@@ -355,9 +356,9 @@ const TextEditor = () => {
             check(data.content);
             // console.log("hbkvilhvv", data.content);
             setRawText(data.content);
-            console.log("SET");
+            // console.log("SET");
           } else {
-            console.log(data.message);
+            // console.log(data.message);
           }
         })
         .catch((error) => {
@@ -367,15 +368,13 @@ const TextEditor = () => {
   }, [id]);
 
   const handleBody = (value) => {
-    if (!hover) {
-      const newText = value.replace(/<[^>]+>/g, "");
-
+    const newText = value.replace(/<[^>]+>/g, "");
+    if (!hover && newText !== text) {
       setText(newText);
       setRawText(value);
       setSave(false);
       setMatches([]);
-
-      console.log("TextUpdated", newText, value);
+      // console.log("TextUpdated", newText, value);
     }
   };
 
@@ -391,10 +390,11 @@ const TextEditor = () => {
       "bold",
       "italic",
       "underline",
-
+      "strike",
       "list",
       "bullet",
       "link",
+      "background",
     ];
   return (
     <UserAuthProvider>
@@ -489,6 +489,8 @@ const TextEditor = () => {
             plagData={plagData}
             addIgnoredWord={addIgnoredWord}
             addIgnoredRule={addIgnoredRule}
+            setLoading={setLoading}
+            loading={loading}
           />
         </div>
       </div>

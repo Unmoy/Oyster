@@ -13,11 +13,13 @@
   top: 50%;
   left: 0%;
   width: 15%;
+  z-index: 5;
 }
 .pricing_images3 {
+  z-index: 5;
   position: absolute;
-  top: 20%;
-  right: 10%;
+  top: 26.5%;
+  right: 5%;
   /* width: 15%; */
 }
 .pricing_images4 {
@@ -67,8 +69,7 @@
   position: relative;
 
   word-break: break-all;
-  /* max-width: 50em; */
-  /* background-color: cadetblue; */
+
 }
 .price_content {
   display: flex;
@@ -126,9 +127,10 @@
   display: flex;
   background: #f5f6ff;
   padding: 20px;
+ 
 }
 .standard {
-  margin: 0 30px;
+  margin-right: 30px;
 }
 .standard h5 {
   font-family: "Bitter";
@@ -162,8 +164,29 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
+.pricing_card.straight_border {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.pricing_card.color_border {
+  border: 1px solid #868cff;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.popular_badge {
+  font-family: "Bitter";
+  background-color: #c4c7fb;
+  position: absolute;
+  right: -1px;
+  top: 10px;
+  padding: 3px 20px 3px 5px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+}
 .pricing_card h3 {
   font-family: "Bitter";
   font-weight: 500;
@@ -171,11 +194,16 @@
   line-height: 34px;
   letter-spacing: -0.015em;
   color: #333342;
+  margin-top: 20px;
 }
 .pricing_card ul {
   margin: 0;
   padding: 0;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+.basic_ul {
+  margin-top: 20px !important;
+  /* background-color: red; */
 }
 .pricing_card ul li {
   font-family: "Inter";
@@ -185,15 +213,16 @@
   letter-spacing: -0.019em;
   color: rgba(0, 0, 0, 0.8);
   list-style-type: square;
+  line-height: 15px;
   padding: 10px 0;
 }
 .half_yearly_card li {
   margin: 0 30px;
 }
-/* .pricing_card ul li::marker {
+.pricing_card ul li::marker {
   color: #c4c7fb;
   font-size: 1.2em;
-} */
+}
 .pricing_price {
   /* max-width: 150px; */
   font-weight: 500;
@@ -224,4 +253,47 @@
   border-radius: 6px;
   color: #4d4e65;
   text-align: center;
+}
+.basic_card_price {
+  margin-bottom: 10px;
+}
+.student_price_container {
+  min-width: 1070px;
+  background: #f5f6ff;
+  height: 616px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.student_price_container h1 {
+  font-family: "Bitter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 43px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.015em;
+  color: #000000;
+}
+.student_price_card {
+  border: 1px solid #000;
+  padding: 20px 30px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 20em;
+}
+.student_price_card h5 {
+  font-family: "Bitter";
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  letter-spacing: -0.015em;
+  color: #333342;
+}
+.student_price_card_list {
+  margin: 20px 0;
 }

@@ -9,26 +9,30 @@ const Header = () => {
 
   const createNewDocument = () => {
     const token = localStorage.getItem("token");
-    fetch("https://oysterbackend.herokuapp.com/document", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
-          navigate(`/texteditor/${data.id}`);
-        } else {
-          console.log(data.message);
-        }
+    if (token) {
+      fetch("https://oysterbackend.herokuapp.com/document", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch((error) => {
-        console.log("error", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.message === "DOCUMENT_CREATED_SUCCESSFULLY") {
+            navigate(`/texteditor/${data.id}`);
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
+    } else {
+      navigate("/login");
+    }
   };
   const handleChange = () => {
     createNewDocument();

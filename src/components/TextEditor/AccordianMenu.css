@@ -231,12 +231,12 @@
   background: #c4c7fb;
   border: 1px solid #000000;
   border-radius: 5px;
-  padding: 5px;
+  /* padding: 5px 40px; */
   font-weight: 500;
   font-size: 15px;
   color: #ffffff;
   margin-top: 10px;
-  width: 150px;
+  width: 180px;
   text-transform: capitalize;
 }
 
@@ -244,16 +244,19 @@
   background: #c4c7fb;
   border: 1px solid #000000;
   border-radius: 5px;
-  padding: 5px;
+  /* padding: 5px 40px; */
+  width: 180px;
   font-weight: 500;
   font-size: 15px;
   color: #ffffff;
   margin-top: 10px;
-  width: 150px;
+  /* width: 150px; */
 }
 .plagarism_card button:hover {
   background: #c4c7fb !important;
   box-shadow: none !important;
+}
+.plagarism_check_btn {
 }
 .plagarism_card_child {
   padding: 0 10px;
