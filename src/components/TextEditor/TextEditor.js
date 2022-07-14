@@ -125,7 +125,7 @@ const TextEditor = () => {
     setRawText(newText);
     let newMatches = matches;
     newMatches.splice(index, 1);
-    setMatches([]);
+    setMatches(newMatches);
     check(newText);
     // console.log("new", newText);
   };
@@ -373,7 +373,7 @@ const TextEditor = () => {
       setText(newText);
       setRawText(value);
       setSave(false);
-      setMatches([]);
+      // setMatches([]);
       // console.log("TextUpdated", newText, value);
     }
   };
